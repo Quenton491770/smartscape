@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SmartScape</title>
+<style>
+body{font-family:Arial;margin:0;background:#f4f7f2;color:#222}
+header{background:#fff;text-align:center;padding:18px 14px}
+header img{width:100%;max-width:520px;border-radius:14px}
+h1{margin:8px 0 2px} .sub{color:#666}
+.card{background:#fff;margin:12px;padding:16px;border-radius:14px;box-shadow:0 2px 8px #0001}
+input,textarea,select{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}
+button{width:100%;padding:13px;border:0;border-radius:10px;background:#1e7a34;color:#fff;font-weight:700;font-size:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid img{width:100%;height:110px;object-fit:cover;border-radius:10px}
+.wa{background:#25D366;text-align:center;display:block;padding:13px;border-radius:10px;color:#fff;text-decoration:none;font-weight:700;margin-top:10px}
+.small{color:#666;font-size:13px}
+.hidden{display:none}
+.service{padding:12px 0;border-bottom:1px solid #eee;font-size:16px}
+.service:last-child{border-bottom:0}
+</style>
+</head>
+<body>
+
+<header>
+<img src="https://i.ibb.co/zhG5Z7Pz/poster.jpg">
+<h1>Welcome to SmartScape 🌿</h1>
+<p class="sub">Paving • Landscaping • Lawn Installation</p>
+</header>
+
+<div class="card" id="authCard">
+<h2>Login / Create Account</h2>
+<input id="email" placeholder="Email">
+<input id="pass" type="password" placeholder="Password">
+<button onclick="login()">Sign In</button>
+<button onclick="signup()" style="background:#222;margin-top:8px">Create Account</button>
+<p class="small">Create an account to place an order. Only admins can see all orders.</p>
+</div>
+
+<div class="card hidden" id="orderCard">
+<h2>Place New Order 📝</h2>
+<p id="who"></p>
+<input id="place" placeholder="Where are you? Village / Town / Place">
+<input id="phone" placeholder="Your contacts - Phone e.g. 56044031">
+<textarea id="details" placeholder="What do you need? e.g. Paving, Landscaping..."></textarea>
+<label class="small">Pictures of the site 📸</label>
+<input type="file" id="sitePhoto" accept="image/*" multiple>
+<button onclick="placeOrder()">Submit Order</button>
+<button onclick="logout()" style="background:#999;margin-top:8px">Logout</button>
+</div>
+
+<div class="card hidden" id="ordersCard">
+<h2 id="ordersTitle">My Orders</h2>
+<div id="ordersList"></div>
+</div>
+
+<!-- SERVICES - NO PHOTOS NOW, ONLY TEXT -->
+<div class="card">
+<h2>Our Services</h2>
+<div class="service">🌿 Landscaping</div>
+<div class="service">🌱 Lawn Decoration and Maintenance</div>
+<div class="service">🏡 Yard Decoration and Maintenance</div>
+<div class="service">🧱 Paving</div>
+<div class="service">🌳 Lawn Installation</div>
+</div>
+
+<!-- QUALITY - PHOTOS ONLY HERE -->
+<div class="card">
+<h2>Quality of Our Work 📸</h2>
+<div class="grid">
+<img src="https://i.ibb.co/zVBSL6Zg/photo1.jpg">
+<img src="https://i.ibb.co/wDm2nYr/photo2.jpg">
+<img src="https://i.ibb.co/BVTyqjXr/photo3.jpg">
+<img src="https://i.ibb.co/gbC7PSHz/photo4.jpg">
+<img src="https://i.ibb.co/gbC7PSHz/photo4.jpg">
+<img src="https://i.ibb.co/zhG5Z7Pz/poster.jpg">
+</div>
+<p class="small">Real work by SmartScape. Paving, Landscaping, Lawn Installation.</p>
+</div>
+
+<div class="card">
+<h2>Contact Us</h2>
+<p>📞 56044031 / 62044031</p>
+<p>✉️ mpoboleliteboho@gmail.com<br>smartscape01@gmail.com</p>
+<a class="wa" href="https://wa.me/26656044031">Chat on WhatsApp 💬</a>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyASD0dN5hudaEmijCn4VwSi3nTDMLyl9GU",
+  authDomain: "smart-scape-946d8.firebaseapp.com",
+  projectId: "smart-scape-946d8",
+  storageBucket: "smart-scape-946d8.firebasestorage.app",
+  messagingSenderId: "973245329066",
+  appId: "1:973245329066:web:7e79cf88027b1aa41c2ad3",
+  measurementId: "G-355LSD8Y9E"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const ADMINS = ["mpoboleliteboho@gmail.com","limphomofoka805@gmail.com"];
+const isAdmin = (email)=> ADMINS.includes((email||"").toLowerCase());
+async function signup(){ try{ await auth.createUserWithEmailAndPassword(email.value,pass.value); alert("Account created!"); }catch(e){alert(e.message)} }
+async function login(){ try{ await auth.signInWithEmailAndPassword(email.value,pass.value); }catch(e){alert(e.message)} }
+async function logout(){ await auth.signOut(); location.reload(); }
+async function placeOrder(){
+  const user = auth.currentUser; if(!user) return alert("Login first");
+  await db.collection("orders").add({email:user.email, place:place.value, phone:phone.value, details:details.value, created:new Date().toISOString(), status:"New"});
+  alert("Order sent! Admin will reply.");
+  place.value=""; phone.value=""; details.value="";
+  loadOrders();
+}
+auth.onAuthStateChanged(async (user)=>{
+  if(!user) return;
+  document.getElementById("authCard").classList.add("hidden");
+  document.getElementById("orderCard").classList.remove("hidden");
+  document.getElementById("ordersCard").classList.remove("hidden");
+  document.getElementById("who").innerText = isAdmin(user.email) ? "👑 You are ADMIN - You see ALL orders" : "Welcome, Buyer - " + user.email;
+  document.getElementById("ordersTitle").innerText = isAdmin(user.email) ? "All Orders (Admin)" : "My Orders";
+  loadOrders();
+});
+async function loadOrders(){
+  const user = auth.currentUser; if(!user) return;
+  let q = isAdmin(user.email) ? db.collection("orders").orderBy("created","desc") : db.collection("orders").where("email","==",user.email).orderBy("created","desc");
+  const snap = await q.get();
+  ordersList.innerHTML = snap.docs.map(d=>{
+    const o=d.data();
+    return `<div style="border-top:1px solid #eee;padding:10px 0"><b>${o.place||""}</b> - ${o.details||""}<br><span class="small">${o.phone||""} | ${o.email} | ${o.status}</span></div>`
+  }).join("") || "No orders yet.";
+}
+</script>
+</body>
+</html>
