@@ -18,6 +18,11 @@ button{width:100%;padding:13px;border:0;border-radius:10px;background:#1e7a34;co
 .hidden{display:none}
 .service{padding:12px 0;border-bottom:1px solid #eee;font-size:16px}
 .service:last-child{border-bottom:0}
+.vault-card{border:2px solid #111;background:#111;color:#fff}
+.vault-card input,.vault-card textarea,.vault-card select{background:#222;color:#fff;border-color:#444}
+.proj{background:#222;padding:12px;border-radius:10px;margin:10px 0}
+.owe{color:#ff6b6b;font-weight:700}
+.paid{color:#4ade80;font-weight:700}
 </style>
 </head>
 <body>
@@ -54,7 +59,23 @@ button{width:100%;padding:13px;border:0;border-radius:10px;background:#1e7a34;co
 <div id="ordersList"></div>
 </div>
 
-<!-- SERVICES - NO PHOTOS NOW, ONLY TEXT -->
+<!-- VAULT - ONLY ADMIN SEES THIS, HIDDEN FROM CUSTOMERS -->
+<div class="card vault-card hidden" id="vaultCard">
+<h2>🔐 SmartScape VAULT - ADMIN ONLY</h2>
+<p class="small" style="color:#aaa">Private: Money, owing, notes. Customers CANNOT see this.</p>
+<input id="vClient" placeholder="Client Name">
+<input id="vPhone" placeholder="Client Phone">
+<select id="vService"><option>Paving</option><option>Landscaping</option><option>Lawn Installation</option><option>Yard Decoration</option><option>Maintenance</option></select>
+<input id="vTotal" type="number" placeholder="Total Price (M)">
+<input id="vPaid" type="number" placeholder="Amount Paid (M)">
+<select id="vStatus"><option>New</option><option>In Progress</option><option>Done</option><option>Paid in Full</option></select>
+<textarea id="vNotes" placeholder="Private notes: e.g. Client said pay Friday, problem with material..."></textarea>
+<input id="vDoc" placeholder="Doc / Photo Link (Google Drive link)">
+<button onclick="addProject()" style="background:#facc15;color:#111">+ Add to Vault</button>
+<div id="vaultList" style="margin-top:14px"></div>
+<p id="vaultTotals" style="font-weight:700"></p>
+</div>
+
 <div class="card">
 <h2>Our Services</h2>
 <div class="service">🌿 Landscaping</div>
@@ -64,7 +85,6 @@ button{width:100%;padding:13px;border:0;border-radius:10px;background:#1e7a34;co
 <div class="service">🌳 Lawn Installation</div>
 </div>
 
-<!-- QUALITY - PHOTOS ONLY HERE -->
 <div class="card">
 <h2>Quality of Our Work 📸</h2>
 <div class="grid">
@@ -95,8 +115,7 @@ const firebaseConfig = {
   projectId: "smart-scape-946d8",
   storageBucket: "smart-scape-946d8.firebasestorage.app",
   messagingSenderId: "973245329066",
-  appId: "1:973245329066:web:7e79cf88027b1aa41c2ad3",
-  measurementId: "G-355LSD8Y9E"
+  appId: "1:973245329066:web:7e79cf88027b1aa41c2ad3"
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
@@ -113,13 +132,33 @@ async function placeOrder(){
   place.value=""; phone.value=""; details.value="";
   loadOrders();
 }
+async function addProject(){
+  if(!isAdmin(auth.currentUser.email)) return alert("Admin only");
+  const total = Number(vTotal.value||0), paid = Number(vPaid.value||0);
+  await db.collection("projectArchive").add({client:vClient.value, phone:vPhone.value, service:vService.value, total, paid, balance: total-paid, status:vStatus.value, notes:vNotes.value, doc:vDoc.value, created:new Date().toISOString()});
+  alert("Saved to Vault!");
+  vClient.value=""; vPhone.value=""; vTotal.value=""; vPaid.value=""; vNotes.value=""; vDoc.value="";
+  loadVault();
+}
+async function loadVault(){
+  if(!isAdmin(auth.currentUser.email)) return;
+  const snap = await db.collection("projectArchive").orderBy("created","desc").get();
+  let tot=0, pd=0, ow=0;
+  vaultList.innerHTML = snap.docs.map(d=>{
+    const o=d.data(); tot+=o.total||0; pd+=o.paid||0; ow+=o.balance||0;
+    return `<div class="proj"><b>${o.client||""}</b> - ${o.service||""} - ${o.status||""}<br>📞 ${o.phone||""}<br>Total: M${o.total} | <span class="paid">Paid: M${o.paid}</span> | <span class="owe">Owes: M${o.balance}</span><br><span class="small">${o.notes||""}</span><br>${o.doc?`<a href="${o.doc}" target="_blank" style="color:#facc15">📄 View Doc</a>`:""}<br><button onclick="delProj('${d.id}')" style="background:#dc2626;margin-top:8px;padding:8px">Delete</button></div>`
+  }).join("") || "No vault projects yet.";
+  vaultTotals.innerText = `TOTAL: M${tot} | COLLECTED: M${pd} | STILL OWED TO YOU: M${ow}`;
+}
+async function delProj(id){ if(confirm("Delete this vault project?")){ await db.collection("projectArchive").doc(id).delete(); loadVault(); } }
 auth.onAuthStateChanged(async (user)=>{
   if(!user) return;
   document.getElementById("authCard").classList.add("hidden");
   document.getElementById("orderCard").classList.remove("hidden");
   document.getElementById("ordersCard").classList.remove("hidden");
-  document.getElementById("who").innerText = isAdmin(user.email) ? "👑 You are ADMIN - You see ALL orders" : "Welcome, Buyer - " + user.email;
+  document.getElementById("who").innerText = isAdmin(user.email) ? "👑 You are ADMIN - You see ALL orders + VAULT" : "Welcome, Buyer - " + user.email;
   document.getElementById("ordersTitle").innerText = isAdmin(user.email) ? "All Orders (Admin)" : "My Orders";
+  if(isAdmin(user.email)){ document.getElementById("vaultCard").classList.remove("hidden"); loadVault(); }
   loadOrders();
 });
 async function loadOrders(){
@@ -133,4 +172,4 @@ async function loadOrders(){
 }
 </script>
 </body>
-</html>
+  </html>
