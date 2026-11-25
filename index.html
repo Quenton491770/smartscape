@@ -21,6 +21,7 @@ button{width:100%;padding:13px;border:0;border-radius:10px;background:#1e7a34;co
 .vault-card{border:2px solid #111;background:#111;color:#fff}
 .vault-card input,.vault-card textarea,.vault-card select{background:#222;color:#fff;border-color:#444}
 .proj{background:#222;padding:12px;border-radius:10px;margin:10px 0}
+.proj img{width:100%;border-radius:10px;margin-top:8px}
 .owe{color:#ff6b6b;font-weight:700}
 .paid{color:#4ade80;font-weight:700}
 .spent{color:#fbbf24;font-weight:700}
@@ -83,12 +84,14 @@ button{width:100%;padding:13px;border:0;border-radius:10px;background:#1e7a34;co
 <input id="vExpense" type="number" placeholder="Expenditure / Money You Spent (M) - Material + Labour">
 <select id="vStatus"><option>New</option><option>In Progress</option><option>Done</option><option>Paid in Full</option></select>
 <textarea id="vNotes" placeholder="Private notes: e.g. Client said pay Friday, problem with material..."></textarea>
-<input id="vDoc" placeholder="Doc / Photo Link (Google Drive link)">
+<label class="small" style="color:#aaa">Upload Photo from Device 📸 - Optional, stays in Vault</label>
+<input type="file" id="vPhoto" accept="image/*">
 <button onclick="addProject()" style="background:#facc15;color:#111">+ Add to Vault</button>
 </div>
 
 <div class="card vault-card hidden" id="vaultListCard">
 <h2>🔐 SmartScape VAULT - ADMIN ONLY</h2>
+<p id="vaultCount" class="small" style="color:#facc15"></p>
 <div id="vaultTotals" class="totalsBox">Loading totals...</div>
 <div id="vaultList" style="margin-top:14px"></div>
 </div>
@@ -139,6 +142,14 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const ADMINS = ["mpoboleliteboho@gmail.com","limphomofoka805@gmail.com"];
 const isAdmin = (email)=> ADMINS.includes((email||"").toLowerCase());
+function readFileAsDataURL(file){
+  return new Promise((resolve)=>{
+    if(!file) return resolve("");
+    const reader = new FileReader();
+    reader.onload = ()=> resolve(reader.result);
+    reader.readAsDataURL(file);
+  });
+}
 function showAdminTab(tab){
   document.getElementById("ordersCard").classList.toggle("hidden", tab!=="orders");
   document.getElementById("vaultFormCard").classList.toggle("hidden", tab!=="add");
@@ -163,22 +174,24 @@ async function addProject(){
   if(!isAdmin(auth.currentUser.email)) return alert("Admin only");
   const total = Number(vTotal.value||0), paid = Number(vPaid.value||0), expense = Number(vExpense.value||0);
   const profit = paid - expense;
-  await db.collection("projectArchive").add({client:vClient.value, phone:vPhone.value, service:vService.value, total, paid, expense, profit, balance: total-paid, status:vStatus.value, notes:vNotes.value, doc:vDoc.value, created:new Date().toISOString()});
-  alert("Saved to Vault! Totals updated automatically.");
-  vClient.value=""; vPhone.value=""; vTotal.value=""; vPaid.value=""; vExpense.value=""; vNotes.value=""; vDoc.value="";
+  const photoData = await readFileAsDataURL(document.getElementById("vPhoto").files[0]);
+  await db.collection("projectArchive").add({client:vClient.value, phone:vPhone.value, service:vService.value, total, paid, expense, profit, balance: total-paid, status:vStatus.value, notes:vNotes.value, photo:photoData, created:new Date().toISOString()});
+  alert("Saved to Vault! It will stay there even after logout.");
+  vClient.value=""; vPhone.value=""; vTotal.value=""; vPaid.value=""; vExpense.value=""; vNotes.value=""; document.getElementById("vPhoto").value="";
   showAdminTab('vault');
 }
 async function loadVault(){
   if(!isAdmin(auth.currentUser.email)) return;
   const snap = await db.collection("projectArchive").orderBy("created","desc").get();
   let tot=0, pd=0, ow=0, exp=0, prof=0;
+  document.getElementById("vaultCount").innerText = `You have ${snap.size} project(s) saved in Vault - They stay here forever until you delete them.`;
   vaultList.innerHTML = snap.docs.map(d=>{
     const o=d.data();
     const oExp = Number(o.expense||0);
     const oPaid = Number(o.paid||0);
     const oProfit = Number(o.profit!==undefined ? o.profit : (oPaid - oExp));
     tot+=Number(o.total||0); pd+=oPaid; ow+=Number(o.balance||0); exp+=oExp; prof+=oProfit;
-    return `<div class="proj"><b>${o.client||""}</b> - ${o.service||""} - ${o.status||""}<br>📞 ${o.phone||""}<br>Total: M${o.total} | <span class="paid">Paid / Income: M${o.paid}</span><br><span class="spent">Spent / Expenditure: M${oExp}</span> | <span class="profit">Profit: M${oProfit}</span> | <span class="owe">Owes: M${o.balance}</span><br><span class="small">${o.notes||""}</span><br>${o.doc?`<a href="${o.doc}" target="_blank" style="color:#facc15">📄 View Doc</a>`:""}<br><button onclick="delProj('${d.id}')" style="background:#dc2626;margin-top:8px;padding:8px">Delete</button></div>`
+    return `<div class="proj"><b>${o.client||""}</b> - ${o.service||""} - ${o.status||""}<br>📞 ${o.phone||""}<br>Total: M${o.total} | <span class="paid">Paid / Income: M${o.paid}</span><br><span class="spent">Spent / Expenditure: M${oExp}</span> | <span class="profit">Profit: M${oProfit}</span> | <span class="owe">Owes: M${o.balance}</span><br><span class="small">${o.notes||""}</span><br>${o.photo?`<img src="${o.photo}">`:""}${o.doc?`<br><a href="${o.doc}" target="_blank" style="color:#facc15">📄 View Old Doc</a>`:""}<br><button onclick="delProj('${d.id}')" style="background:#dc2626;margin-top:8px;padding:8px">Delete</button></div>`
   }).join("") || "No vault projects yet.";
   vaultTotals.innerHTML = `<b>📊 ALL PROJECTS - AUTOMATIC TOTALS</b><br>💰 Total Income (Paid): <b>M${pd}</b><br>💸 Total Expenditure (Spent): <b>M${exp}</b><br>📈 Total Profit (Income - Spent): <b>M${prof}</b><br>🧾 Total Project Value: <b>M${tot}</b><br>🔴 Still Owed To You: <b>M${ow}</b>`;
 }
@@ -214,4 +227,4 @@ async function loadOrders(){
 }
 </script>
 </body>
-  </html>
+  </html> 
