@@ -1,230 +1,491 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SmartScape</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#1e7a34"><link rel="apple-touch-icon" href="icon-192.png">
+<title>SmartScape | Paving • Landscaping • Lawn Installation</title>
 <style>
-body{font-family:Arial;margin:0;background:#f4f7f2;color:#222}
-header{background:#fff;text-align:center;padding:18px 14px}
-header img{width:100%;max-width:520px;border-radius:14px}
-h1{margin:8px 0 2px} .sub{color:#666}
-.card{background:#fff;margin:12px;padding:16px;border-radius:14px;box-shadow:0 2px 8px #0001}
-input,textarea,select{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}
-button{width:100%;padding:13px;border:0;border-radius:10px;background:#1e7a34;color:#fff;font-weight:700;font-size:16px}
+:root{--g:#1e7a34;--g2:#14572a;--bg:#f3f7f1;--ink:#1b2420;--mut:#6b776f;--card:#fff;--line:#e4ebe2;--gold:#facc15;--dk:#121714;--dk2:#1c241f;--red:#ef4444;--blue:#60a5fa}
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink);line-height:1.45}
+.wrap{max-width:760px;margin:0 auto;padding:0 12px 40px}
+.hero{background:linear-gradient(160deg,var(--g2),var(--g));color:#fff;text-align:center;padding:26px 16px 30px;border-radius:0 0 28px 28px}
+.hero img{width:100%;max-width:520px;border-radius:16px;box-shadow:0 8px 28px #0004}
+.hero h1{margin:14px 0 4px;font-size:26px}.hero p{margin:0;opacity:.9}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}
+.chip{background:#ffffff22;padding:6px 12px;border-radius:99px;font-size:13px}
+.card{background:var(--card);margin:14px 0;padding:18px;border-radius:16px;box-shadow:0 2px 10px #0000000d}
+.card h2{margin:0 0 10px;font-size:19px}
+input,textarea,select{width:100%;padding:12px;margin:6px 0;border:1px solid #d5ddd3;border-radius:10px;font:inherit;background:#fff;color:inherit}
+textarea{min-height:90px;resize:vertical}
+button{width:100%;padding:13px;border:0;border-radius:10px;background:var(--g);color:#fff;font-weight:700;font-size:15px;cursor:pointer;margin-top:6px}
+button:active{transform:scale(.98)}
+button.alt{background:#2b3530}button.ghost{background:#e9efe7;color:var(--ink)}button.danger{background:#dc2626}button.sm{width:auto;padding:8px 12px;font-size:13px;margin:0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row>*{flex:1}
+.small{color:var(--mut);font-size:13px}
+.hidden{display:none!important}
+.service{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.service:last-child{border:0}.service b{display:block}.service span.i{font-size:26px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.grid img{width:100%;height:110px;object-fit:cover;border-radius:10px}
-.wa{background:#25D366;text-align:center;display:block;padding:13px;border-radius:10px;color:#fff;text-decoration:none;font-weight:700;margin-top:10px}
-.small{color:#666;font-size:13px}
-.hidden{display:none}
-.service{padding:12px 0;border-bottom:1px solid #eee;font-size:16px}
-.service:last-child{border-bottom:0}
-.vault-card{border:2px solid #111;background:#111;color:#fff}
-.vault-card input,.vault-card textarea,.vault-card select{background:#222;color:#fff;border-color:#444}
-.proj{background:#222;padding:12px;border-radius:10px;margin:10px 0}
-.proj img{width:100%;border-radius:10px;margin-top:8px}
-.owe{color:#ff6b6b;font-weight:700}
-.paid{color:#4ade80;font-weight:700}
-.spent{color:#fbbf24;font-weight:700}
-.profit{color:#60a5fa;font-weight:700}
-.tabBtn{background:#222;color:#fff;margin-bottom:8px}
-.tabBtn.active{background:#facc15;color:#111}
-.totalsBox{background:#facc15;color:#111;padding:14px;border-radius:10px;margin-top:12px;line-height:1.7}
+.grid img{width:100%;height:120px;object-fit:cover;border-radius:12px}
+.wa{display:block;background:#25D366;color:#fff;text-align:center;text-decoration:none;font-weight:700;padding:13px;border-radius:10px;margin-top:10px}
+.wa.sm{display:inline-block;padding:8px 12px;font-size:13px;margin:0}
+.badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:700;background:#e9efe7;color:var(--g2)}
+.badge.New{background:#fef3c7;color:#92400e}.badge.Declined{background:#fee2e2;color:#991b1b}.badge.Done,.badge.Paid{background:#dcfce7;color:#166534}
+.order{border-top:1px solid var(--line);padding:12px 0}
+.thumbs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.thumbs img{width:64px;height:64px;object-fit:cover;border-radius:8px;cursor:zoom-in}
+/* admin */
+.admin{background:var(--dk);color:#fff;border-radius:18px;padding:14px;margin:14px 0}
+.admin h2{margin:4px 0 10px}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;position:sticky;top:0;z-index:5;background:var(--dk);padding:6px 0}
+.tabs button{background:var(--dk2);margin:0;padding:10px 4px;font-size:13px}.tabs button.on{background:var(--gold);color:#111}
+.admin .box{background:var(--dk2);border-radius:12px;padding:14px;margin:10px 0}
+.admin input,.admin textarea,.admin select{background:#273029;color:#fff;border-color:#3a463d}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--dk2);border-radius:12px;padding:12px}.stat small{color:#9fb0a4;display:block}.stat b{font-size:20px}
+.inc{color:#4ade80}.exp{color:#fbbf24}.prf{color:var(--blue)}.owe{color:#ff6b6b}
+.bars{display:flex;align-items:flex-end;gap:8px;height:110px;margin-top:8px}
+.bars div.m{flex:1;text-align:center;font-size:11px;color:#9fb0a4}
+.bars .pair{display:flex;gap:3px;align-items:flex-end;height:90px;justify-content:center}
+.bars .pair i{display:block;width:12px;border-radius:4px 4px 0 0;min-height:2px}
+.proj{background:var(--dk2);border-radius:12px;padding:14px;margin:10px 0}
+.prog{height:8px;background:#34403a;border-radius:9px;overflow:hidden;margin:8px 0}.prog i{display:block;height:100%;background:#4ade80}
+.line{display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:5px 0;border-bottom:1px dashed #34403a}
+dialog{border:0;border-radius:16px;padding:18px;width:min(92vw,400px);background:#fff;color:var(--ink)}
+dialog::backdrop{background:#000a}
+#lb{position:fixed;inset:0;background:#000d;display:flex;align-items:center;justify-content:center;z-index:50;padding:12px}
+#lb img{max-width:100%;max-height:100%;border-radius:12px}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:99px;font-size:14px;z-index:60;opacity:0;pointer-events:none;transition:.25s}
+#toast.show{opacity:1}
+footer{text-align:center;color:var(--mut);font-size:12px;margin-top:20px}
 </style>
 </head>
 <body>
 
-<header>
-<img src="https://i.ibb.co/zhG5Z7Pz/poster.jpg">
-<h1>Welcome to SmartScape 🌿</h1>
-<p class="sub">Paving • Landscaping • Lawn Installation</p>
+<header class="hero">
+  <img src="https://i.ibb.co/zhG5Z7Pz/poster.jpg" alt="SmartScape">
+  <h1>SmartScape 🌿</h1>
+  <p>We build the outdoors you dream about</p>
+  <div class="chips"><span class="chip">🧱 Paving</span><span class="chip">🌿 Landscaping</span><span class="chip">🌳 Lawn Installation</span></div>
+  <div class="row" style="margin-top:12px;justify-content:center"><button id="btnInstall" class="sm hidden" style="background:#facc15;color:#111">📲 Install App</button><button id="btnLang" class="sm" style="background:#ffffff33">🌍 Sesotho</button></div>
 </header>
 
-<div class="card" id="authCard">
-<h2>Login / Create Account</h2>
-<input id="email" placeholder="Email">
-<input id="pass" type="password" placeholder="Password">
-<button onclick="login()">Sign In</button>
-<button onclick="signup()" style="background:#222;margin-top:8px">Create Account</button>
-<p class="small">Create an account to place an order.</p>
-</div>
+<main class="wrap">
 
-<div class="card hidden" id="adminTabs">
-<h2>👑 Admin</h2>
-<button class="tabBtn active" id="tabOrdersBtn" onclick="showAdminTab('orders')">📦 Orders</button>
-<button class="tabBtn" id="tabAddBtn" onclick="showAdminTab('add')">➕ Add to Vault</button>
-<button class="tabBtn" id="tabVaultBtn" onclick="showAdminTab('vault')">🔐 Vault</button>
-<button onclick="logout()" style="background:#999;margin-top:8px">Logout</button>
-</div>
+  <!-- LOGIN -->
+  <section class="card" id="authCard">
+    <h2>Get a Quote 👋</h2>
+    <p class="small">Sign in or create a free account to send us your order.</p>
+    <input id="email" type="email" placeholder="Email" autocomplete="email">
+    <input id="pass" type="password" placeholder="Password (min 6 characters)" autocomplete="current-password">
+    <button id="btnLogin">Sign In</button>
+    <button id="btnSignup" class="alt">Create Account</button>
+    <button id="btnReset" class="ghost">Forgot password?</button>
+  </section>
 
-<div class="card hidden" id="orderCard">
-<h2>Place New Order 📝</h2>
-<p id="who"></p>
-<input id="place" placeholder="Where are you? Village / Town / Place">
-<input id="phone" placeholder="Your contacts - Phone e.g. 56044031">
-<textarea id="details" placeholder="What do you need? e.g. Paving, Landscaping..."></textarea>
-<label class="small">Pictures of the site 📸</label>
-<input type="file" id="sitePhoto" accept="image/*" multiple>
-<button onclick="placeOrder()">Submit Order</button>
-<button onclick="logout()" style="background:#999;margin-top:8px">Logout</button>
-</div>
+  <!-- ADMIN VERIFY NOTICE -->
+  <section class="card hidden" id="verifyCard">
+    <h2>📧 Verify your email</h2>
+    <p class="small">Please verify your email to send orders or open the admin area. Check your inbox (and spam), click the link, then tap below.</p>
+    <button id="btnVerified">I've verified</button>
+    <button id="btnResend" class="ghost">Resend email</button>
+    <button class="alt" data-act="logout">Logout</button>
+  </section>
 
-<div class="card hidden" id="ordersCard">
-<h2 id="ordersTitle">My Orders</h2>
-<div id="ordersList"></div>
-</div>
+  <!-- CUSTOMER -->
+  <section id="customer" class="hidden">
+    <div class="card">
+      <h2>Place a New Order 📝</h2>
+      <p class="small" id="who"></p>
+      <input id="oName" placeholder="Your name">
+      <input id="oPlace" placeholder="Where are you? Village / Town">
+      <input id="oPhone" type="tel" placeholder="Phone e.g. 56044031">
+      <select id="oService"><option>Paving</option><option>Landscaping</option><option>Lawn Installation</option><option>Yard Decoration</option><option>Maintenance</option><option>Other</option></select>
+      <textarea id="oDetails" placeholder="What do you need? e.g. Paving a 5m x 4m driveway..."></textarea>
+      <label class="small">Photos of the site 📸 (up to 4)</label>
+      <input type="file" id="oPhotos" accept="image/*" multiple>
+      <div class="thumbs" id="oPrev"></div>
+      <button id="btnOrder">Submit Order</button>
+    </div>
+    <div class="card"><h2>My Orders</h2><div id="myOrders"></div></div>
+    <button class="ghost" data-act="pwreset">🔑 Change password</button>
+    <button class="alt" data-act="logout">Logout</button>
+  </section>
 
-<div class="card vault-card hidden" id="vaultFormCard">
-<h2>➕ Add to Vault - ADMIN ONLY</h2>
-<p class="small" style="color:#aaa">Private: Money, owing, notes. Customers CANNOT see this.</p>
-<input id="vClient" placeholder="Client Name">
-<input id="vPhone" placeholder="Client Phone">
-<select id="vService"><option>Paving</option><option>Landscaping</option><option>Lawn Installation</option><option>Yard Decoration</option><option>Maintenance</option></select>
-<input id="vTotal" type="number" placeholder="Total Price (M)">
-<input id="vPaid" type="number" placeholder="Amount Paid / Income (M)">
-<input id="vExpense" type="number" placeholder="Expenditure / Money You Spent (M) - Material + Labour">
-<select id="vStatus"><option>New</option><option>In Progress</option><option>Done</option><option>Paid in Full</option></select>
-<textarea id="vNotes" placeholder="Private notes: e.g. Client said pay Friday, problem with material..."></textarea>
-<label class="small" style="color:#aaa">Upload Photo from Device 📸 - Optional, stays in Vault</label>
-<input type="file" id="vPhoto" accept="image/*">
-<button onclick="addProject()" style="background:#facc15;color:#111">+ Add to Vault</button>
-</div>
+  <!-- ADMIN -->
+  <section id="adminApp" class="admin hidden">
+    <h2>👑 SmartScape Admin</h2>
+    <div class="tabs">
+      <button data-tab="dash" class="on">📊 Home</button>
+      <button data-tab="orders">📦 Orders</button>
+      <button data-tab="projects">🔐 Vault</button>
+      <button data-tab="clients">👥 Clients</button>
+    </div>
 
-<div class="card vault-card hidden" id="vaultListCard">
-<h2>🔐 SmartScape VAULT - ADMIN ONLY</h2>
-<p id="vaultCount" class="small" style="color:#facc15"></p>
-<div id="vaultTotals" class="totalsBox">Loading totals...</div>
-<div id="vaultList" style="margin-top:14px"></div>
-</div>
+    <div id="t-dash">
+      <div class="box"><div class="stats" id="stats"></div></div>
+      <div class="box"><b>Last 6 months</b> <span class="small">🟢 income · 🟡 spent</span><div class="bars" id="bars"></div></div>
+    </div>
 
-<div class="card" id="servicesCard">
-<h2>Our Services</h2>
-<div class="service">🌿 Landscaping</div>
-<div class="service">🌱 Lawn Decoration and Maintenance</div>
-<div class="service">🏡 Yard Decoration and Maintenance</div>
-<div class="service">🧱 Paving</div>
-<div class="service">🌳 Lawn Installation</div>
-</div>
+    <div id="t-orders" class="hidden"><div id="adminOrders"></div></div>
 
-<div class="card" id="galleryCard">
-<h2>Quality of Our Work 📸</h2>
-<div class="grid">
-<img src="https://i.ibb.co/zVBSL6Zg/photo1.jpg">
-<img src="https://i.ibb.co/wDm2nYr/photo2.jpg">
-<img src="https://i.ibb.co/BVTyqjXr/photo3.jpg">
-<img src="https://i.ibb.co/gbC7PSHz/photo4.jpg">
-<img src="https://i.ibb.co/gbC7PSHz/photo4.jpg">
-<img src="https://i.ibb.co/zhG5Z7Pz/poster.jpg">
-</div>
-<p class="small">Real work by SmartScape. Paving, Landscaping, Lawn Installation.</p>
-</div>
+    <div id="t-projects" class="hidden">
+      <div class="box">
+        <b>➕ New Project</b>
+        <input id="pClient" placeholder="Client name">
+        <input id="pPhone" type="tel" placeholder="Client phone">
+        <input id="pPlace" placeholder="Location">
+        <select id="pService"><option>Paving</option><option>Landscaping</option><option>Lawn Installation</option><option>Yard Decoration</option><option>Maintenance</option></select>
+        <input id="pTotal" type="number" inputmode="decimal" placeholder="Total price (M)">
+        <textarea id="pNotes" placeholder="Private notes (customers never see this)"></textarea>
+        <button id="btnProject" style="background:var(--gold);color:#111">Save to Vault</button>
+      </div>
+      <div class="row"><input id="pSearch" placeholder="🔎 Search client, service, status..."><button id="btnCsv" class="sm alt" style="flex:0 0 auto">⬇ CSV</button></div>
+      <div id="projList"></div>
+    </div>
 
-<div class="card" id="contactCard">
-<h2>Contact Us</h2>
-<p>📞 56044031 / 62044031</p>
-<p>✉️ mpoboleliteboho@gmail.com<br>smartscape01@gmail.com</p>
-<a class="wa" href="https://wa.me/26656044031">Chat on WhatsApp 💬</a>
-</div>
+    <div id="t-clients" class="hidden"><div id="clientList"></div></div>
+
+    <button class="ghost" data-act="pwreset" style="margin-top:12px">🔑 Change password</button>
+    <button class="alt" data-act="logout" style="margin-top:6px">Logout</button>
+  </section>
+
+  <!-- PUBLIC INFO -->
+  <section id="pub">
+    <div class="card"><h2>Our Services</h2>
+      <div class="service"><span class="i">🧱</span><div><b>Paving</b><span class="small">Driveways, patios & walkways</span></div></div>
+      <div class="service"><span class="i">🌿</span><div><b>Landscaping</b><span class="small">Design and full yard makeovers</span></div></div>
+      <div class="service"><span class="i">🌳</span><div><b>Lawn Installation</b><span class="small">Fresh, lush, even grass</span></div></div>
+      <div class="service"><span class="i">🏡</span><div><b>Yard Decoration & Maintenance</b><span class="small">Keep it looking perfect</span></div></div>
+    </div>
+    <div class="card"><h2>Quality of Our Work 📸</h2>
+      <div class="grid">
+        <img loading="lazy" src="https://i.ibb.co/zVBSL6Zg/photo1.jpg" alt="Work 1">
+        <img loading="lazy" src="https://i.ibb.co/wDm2nYr/photo2.jpg" alt="Work 2">
+        <img loading="lazy" src="https://i.ibb.co/BVTyqjXr/photo3.jpg" alt="Work 3">
+        <img loading="lazy" src="https://i.ibb.co/gbC7PSHz/photo4.jpg" alt="Work 4">
+      </div>
+      <p class="small">Real work by SmartScape.</p>
+    </div>
+    <div class="card"><h2>Contact Us</h2>
+      <p>📞 56044031 / 62044031</p>
+      <p>✉️ mpoboleliteboho@gmail.com<br>smartscape01@gmail.com</p>
+      <a class="wa" href="https://wa.me/26656044031">Chat on WhatsApp 💬</a>
+    </div>
+  </section>
+
+  <footer>© SmartScape · Lesotho</footer>
+</main>
+
+<dialog id="dlg">
+  <h3 id="dlgTitle" style="margin-top:0"></h3>
+  <input id="dAmount" type="number" inputmode="decimal" placeholder="Amount (M)">
+  <input id="dNote" placeholder="Note (e.g. cement, labour, deposit)">
+  <button id="dSave">Save</button>
+  <button class="ghost" id="dCancel">Cancel</button>
+</dialog>
+<div id="lb" class="hidden"><img alt=""></div>
+<div id="toast"></div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyASD0dN5hudaEmijCn4VwSi3nTDMLyl9GU",
-  authDomain: "smart-scape-946d8.firebaseapp.com",
-  projectId: "smart-scape-946d8",
-  storageBucket: "smart-scape-946d8.firebasestorage.app",
-  messagingSenderId: "973245329066",
-  appId: "1:973245329066:web:7e79cf88027b1aa41c2ad3"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-const ADMINS = ["mpoboleliteboho@gmail.com","limphomofoka805@gmail.com"];
-const isAdmin = (email)=> ADMINS.includes((email||"").toLowerCase());
-function readFileAsDataURL(file){
-  return new Promise((resolve)=>{
-    if(!file) return resolve("");
-    const reader = new FileReader();
-    reader.onload = ()=> resolve(reader.result);
-    reader.readAsDataURL(file);
-  });
-}
-function showAdminTab(tab){
-  document.getElementById("ordersCard").classList.toggle("hidden", tab!=="orders");
-  document.getElementById("vaultFormCard").classList.toggle("hidden", tab!=="add");
-  document.getElementById("vaultListCard").classList.toggle("hidden", tab!=="vault");
-  document.getElementById("tabOrdersBtn").classList.toggle("active", tab==="orders");
-  document.getElementById("tabAddBtn").classList.toggle("active", tab==="add");
-  document.getElementById("tabVaultBtn").classList.toggle("active", tab==="vault");
-  if(tab==="vault") loadVault();
-  if(tab==="orders") loadOrders();
-}
-async function signup(){ try{ await auth.createUserWithEmailAndPassword(email.value,pass.value); alert("Account created!"); }catch(e){alert(e.message)} }
-async function login(){ try{ await auth.signInWithEmailAndPassword(email.value,pass.value); }catch(e){alert(e.message)} }
-async function logout(){ await auth.signOut(); location.reload(); }
-async function placeOrder(){
-  const user = auth.currentUser; if(!user) return alert("Login first");
-  await db.collection("orders").add({email:user.email, place:place.value, phone:phone.value, details:details.value, created:new Date().toISOString(), status:"New"});
-  alert("Order sent! Admin will reply.");
-  place.value=""; phone.value=""; details.value="";
-  loadOrders();
-}
-async function addProject(){
-  if(!isAdmin(auth.currentUser.email)) return alert("Admin only");
-  const total = Number(vTotal.value||0), paid = Number(vPaid.value||0), expense = Number(vExpense.value||0);
-  const profit = paid - expense;
-  const photoData = await readFileAsDataURL(document.getElementById("vPhoto").files[0]);
-  await db.collection("projectArchive").add({client:vClient.value, phone:vPhone.value, service:vService.value, total, paid, expense, profit, balance: total-paid, status:vStatus.value, notes:vNotes.value, photo:photoData, created:new Date().toISOString()});
-  alert("Saved to Vault! It will stay there even after logout.");
-  vClient.value=""; vPhone.value=""; vTotal.value=""; vPaid.value=""; vExpense.value=""; vNotes.value=""; document.getElementById("vPhoto").value="";
-  showAdminTab('vault');
-}
-async function loadVault(){
-  if(!isAdmin(auth.currentUser.email)) return;
-  const snap = await db.collection("projectArchive").orderBy("created","desc").get();
-  let tot=0, pd=0, ow=0, exp=0, prof=0;
-  document.getElementById("vaultCount").innerText = `You have ${snap.size} project(s) saved in Vault - They stay here forever until you delete them.`;
-  vaultList.innerHTML = snap.docs.map(d=>{
-    const o=d.data();
-    const oExp = Number(o.expense||0);
-    const oPaid = Number(o.paid||0);
-    const oProfit = Number(o.profit!==undefined ? o.profit : (oPaid - oExp));
-    tot+=Number(o.total||0); pd+=oPaid; ow+=Number(o.balance||0); exp+=oExp; prof+=oProfit;
-    return `<div class="proj"><b>${o.client||""}</b> - ${o.service||""} - ${o.status||""}<br>📞 ${o.phone||""}<br>Total: M${o.total} | <span class="paid">Paid / Income: M${o.paid}</span><br><span class="spent">Spent / Expenditure: M${oExp}</span> | <span class="profit">Profit: M${oProfit}</span> | <span class="owe">Owes: M${o.balance}</span><br><span class="small">${o.notes||""}</span><br>${o.photo?`<img src="${o.photo}">`:""}${o.doc?`<br><a href="${o.doc}" target="_blank" style="color:#facc15">📄 View Old Doc</a>`:""}<br><button onclick="delProj('${d.id}')" style="background:#dc2626;margin-top:8px;padding:8px">Delete</button></div>`
-  }).join("") || "No vault projects yet.";
-  vaultTotals.innerHTML = `<b>📊 ALL PROJECTS - AUTOMATIC TOTALS</b><br>💰 Total Income (Paid): <b>M${pd}</b><br>💸 Total Expenditure (Spent): <b>M${exp}</b><br>📈 Total Profit (Income - Spent): <b>M${prof}</b><br>🧾 Total Project Value: <b>M${tot}</b><br>🔴 Still Owed To You: <b>M${ow}</b>`;
-}
-async function delProj(id){ if(confirm("Delete this vault project?")){ await db.collection("projectArchive").doc(id).delete(); loadVault(); } }
-auth.onAuthStateChanged(async (user)=>{
-  if(!user) return;
-  document.getElementById("authCard").classList.add("hidden");
-  if(isAdmin(user.email)){
-    document.getElementById("adminTabs").classList.remove("hidden");
-    document.getElementById("orderCard").classList.add("hidden");
-    document.getElementById("servicesCard").classList.add("hidden");
-    document.getElementById("galleryCard").classList.add("hidden");
-    document.getElementById("contactCard").classList.add("hidden");
-    document.getElementById("ordersTitle").innerText = "All Orders (Admin)";
-    document.getElementById("who").innerText = "👑 You are ADMIN";
-    showAdminTab('orders');
-  } else {
-    document.getElementById("orderCard").classList.remove("hidden");
-    document.getElementById("ordersCard").classList.remove("hidden");
-    document.getElementById("who").innerText = "Welcome, Buyer - " + user.email;
-    document.getElementById("ordersTitle").innerText = "My Orders";
-    loadOrders();
-  }
+firebase.initializeApp({
+  apiKey:"AIzaSyASD0dN5hudaEmijCn4VwSi3nTDMLyl9GU",
+  authDomain:"smart-scape-946d8.firebaseapp.com",
+  projectId:"smart-scape-946d8",
+  storageBucket:"smart-scape-946d8.firebasestorage.app",
+  messagingSenderId:"973245329066",
+  appId:"1:973245329066:web:7e79cf88027b1aa41c2ad3"
 });
-async function loadOrders(){
-  const user = auth.currentUser; if(!user) return;
-  let q = isAdmin(user.email) ? db.collection("orders").orderBy("created","desc") : db.collection("orders").where("email","==",user.email).orderBy("created","desc");
-  const snap = await q.get();
-  ordersList.innerHTML = snap.docs.map(d=>{
-    const o=d.data();
-    return `<div style="border-top:1px solid #eee;padding:10px 0"><b>${o.place||""}</b> - ${o.details||""}<br><span class="small">${o.phone||""} | ${o.email} | ${o.status}</span></div>`
-  }).join("") || "No orders yet.";
+const auth=firebase.auth(), db=firebase.firestore();
+// UI only. The REAL protection is firestore.rules
+const ADMINS=["mpoboleliteboho@gmail.com","limphomofoka805@gmail.com"];
+const isAdmin=u=>!!u&&ADMINS.includes((u.email||"").toLowerCase());
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const M=n=>"M"+Number(n||0).toLocaleString();
+const num=v=>Number(v)||0;
+const sum=(a,f)=>a.reduce((t,x)=>t+num(f(x)),0);
+const byDate=(a,k)=>a.sort((x,y)=>String(y[k]||"").localeCompare(String(x[k]||"")));
+const waLink=p=>{const d=String(p||"").replace(/\D/g,"");return d?"https://wa.me/"+(d.length===8?"266"+d:d):"#"};
+let tt;function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2800)}
+async function busy(btn,fn){const o=btn.textContent;btn.disabled=true;btn.textContent="Please wait...";try{await fn()}catch(e){toast(e.code==="permission-denied"?"Not allowed: only one order per day, or your account is blocked. Call 56044031.":(e.message||"Something went wrong"))}finally{btn.disabled=false;btn.textContent=o}}
+
+// Shrink photos so they fit comfortably in the database (~100KB each)
+function compress(file,max=900,q=.65){return new Promise((res,rej)=>{
+  const r=new FileReader();r.onerror=rej;
+  r.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{
+    const s=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");
+    c.width=im.width*s;c.height=im.height*s;c.getContext("2d").drawImage(im,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",q))};
+    im.src=r.result};r.readAsDataURL(file)})}
+
+/* ---------- AUTH ---------- */
+$("btnLogin").onclick=e=>busy(e.target,()=>auth.signInWithEmailAndPassword($("email").value.trim(),$("pass").value));
+$("btnSignup").onclick=e=>busy(e.target,async()=>{
+  const c=await auth.createUserWithEmailAndPassword($("email").value.trim(),$("pass").value);
+  await c.user.sendEmailVerification().catch(()=>{});toast("Account created! 🎉")});
+$("btnReset").onclick=e=>busy(e.target,async()=>{
+  if(!$("email").value)throw new Error("Type your email first");
+  await auth.sendPasswordResetEmail($("email").value.trim());toast("Reset link sent to your email")});
+$("btnResend").onclick=e=>busy(e.target,async()=>{await auth.currentUser.sendEmailVerification();toast("Verification email sent")});
+$("btnVerified").onclick=e=>busy(e.target,async()=>{await auth.currentUser.reload();await auth.currentUser.getIdToken(true);route(auth.currentUser)});
+document.addEventListener("click",e=>{
+  const a=e.target.closest("[data-act]");if(!a)return;
+  const act=a.dataset.act,id=a.dataset.id;
+  if(act==="logout")auth.signOut().then(()=>location.reload());
+  if(act==="zoom"){$("lb").firstElementChild.src=a.src;$("lb").classList.remove("hidden")}
+  if(act==="pay")openDlg("payments",id,"💰 Add payment received");
+  if(act==="exp")openDlg("expenses",id,"💸 Add expense");
+  if(act==="delp")del("payments",id);
+  if(act==="dele")del("expenses",id);
+  if(act==="delproj")delProject(id);
+  if(act==="toproj")toProject(id);
+  if(act==="inv")invoice(id);
+  if(act==="block")blockUser(id);
+  if(act==="rcp")receipt(id);
+  if(act==="pwreset")auth.sendPasswordResetEmail(auth.currentUser.email).then(()=>toast("Reset link sent to "+auth.currentUser.email)).catch(e=>toast(e.message));
+  if(act==="toggle")$("d-"+id).classList.toggle("hidden");
+});
+$("lb").onclick=()=>$("lb").classList.add("hidden");
+auth.onAuthStateChanged(route);
+
+function route(u){
+  const show=(id,on)=>$(id).classList.toggle("hidden",!on);
+  show("authCard",!u);show("verifyCard",false);show("customer",false);show("adminApp",false);show("pub",true);
+  if(!u)return;
+  if(isAdmin(u)){
+    if(!u.emailVerified){show("verifyCard",true);return}
+    show("adminApp",true);show("pub",false);loadAdmin();
+  }else{
+    show("customer",true);show("verifyCard",!u.emailVerified);$("who").textContent="Signed in as "+u.email;loadMyOrders();
+  }
+}
+
+/* ---------- CUSTOMER ---------- */
+let photos=[];
+$("oPhotos").onchange=async e=>{
+  photos=[];const files=[...e.target.files].slice(0,4);
+  for(const f of files)photos.push(await compress(f));
+  $("oPrev").innerHTML=photos.map(p=>`<img src="${esc(p)}" alt="">`).join("");
+};
+$("btnOrder").onclick=e=>busy(e.target,async()=>{
+  const u=auth.currentUser;if(!u)throw new Error("Please sign in first");
+  if(!$("oPhone").value.trim()||!$("oDetails").value.trim())throw new Error("Add your phone and what you need");
+  if(!u.emailVerified)throw new Error("Please verify your email first (see the banner above)");
+  const ph=$("oPhone").value.replace(/\s/g,"");
+  if(!/^\d{8}$/.test(ph))throw new Error("Enter a valid 8-digit phone number");
+  if($("oDetails").value.trim().length<15)throw new Error("Please describe what you need (at least 15 characters)");
+  const d=new Date(),oid=u.uid+"_"+d.getUTCFullYear()+"-"+(d.getUTCMonth()+1)+"-"+d.getUTCDate();
+  await db.collection("orders").doc(oid).set({email:u.email,name:$("oName").value.trim(),place:$("oPlace").value.trim(),phone:ph,details:"["+$("oService").value+"] "+$("oDetails").value.trim(),photos,created:new Date().toISOString(),status:"New"});
+  ["oName","oPlace","oPhone","oDetails","oPhotos"].forEach(i=>$(i).value="");photos=[];$("oPrev").innerHTML="";
+  toast("Order sent! We'll contact you soon ✅");loadMyOrders();
+});
+async function loadMyOrders(){
+  const s=await db.collection("orders").where("email","==",auth.currentUser.email).get();
+  const a=byDate(s.docs.map(d=>d.data()),"created");
+  $("myOrders").innerHTML=a.map(o=>`<div class="order"><b>${esc(o.place)||"Order"}</b> <span class="badge ${esc(o.status)}">${esc(o.status)}</span><br>${esc(o.details)}<br><span class="small">${new Date(o.created).toLocaleDateString()}</span></div>`).join("")||'<p class="small">No orders yet.</p>';
+}
+
+/* ---------- ADMIN ---------- */
+let D={orders:[],clients:[],projects:[],payments:[],expenses:[]};
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>tab(b.dataset.tab));
+function tab(t){
+  document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t));
+  ["dash","orders","projects","clients"].forEach(x=>$("t-"+x).classList.toggle("hidden",x!==t));
+}
+async function loadAdmin(){
+  const get=async c=>(await db.collection(c).get()).docs.map(d=>({id:d.id,...d.data()}));
+  try{
+    const [o,c,p,pay,ex]=await Promise.all(["orders","clients","projectArchive","payments","expenses"].map(get));
+    D={orders:byDate(o,"created"),clients:c,projects:byDate(p,"created"),payments:pay,expenses:ex};
+  }catch(e){toast("Cannot load data: "+e.message);return}
+  renderDash();renderOrders();renderProjects();renderClients();
+}
+const projFin=p=>{
+  const paid=num(p.paid)+sum(D.payments.filter(x=>x.projectId===p.id),x=>x.amount);
+  const spent=num(p.expense)+sum(D.expenses.filter(x=>x.projectId===p.id),x=>x.amount);
+  return{paid,spent,profit:paid-spent,owes:Math.max(0,num(p.total)-paid)};
+};
+function renderDash(){
+  const f=D.projects.map(projFin);
+  const inc=sum(f,x=>x.paid),spt=sum(f,x=>x.spent),owe=sum(f,x=>x.owes);
+  const open=D.projects.filter(p=>p.status!=="Paid in Full").length;
+  const nn=D.orders.filter(o=>o.status==="New").length;
+  document.querySelector('[data-tab="orders"]').textContent="📦 Orders"+(nn?" ("+nn+")":"");
+  $("stats").innerHTML=`
+   <div class="stat"><small>💰 Income</small><b class="inc">${M(inc)}</b></div>
+   <div class="stat"><small>💸 Spent</small><b class="exp">${M(spt)}</b></div>
+   <div class="stat"><small>📈 Profit</small><b class="prf">${M(inc-spt)}</b></div>
+   <div class="stat"><small>🔴 Owed to you</small><b class="owe">${M(owe)}</b></div>
+   <div class="stat"><small>🆕 New orders</small><b>${D.orders.filter(o=>o.status==="New").length}</b></div>
+   <div class="stat"><small>🛠 Open projects</small><b>${open}</b></div>`;
+  const months=[];for(let i=5;i>=0;i--){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);months.push(d)}
+  const key=d=>d.getFullYear()+"-"+d.getMonth();
+  const agg=a=>{const m={};a.forEach(x=>{const k=key(new Date(x.date||x.created));m[k]=(m[k]||0)+num(x.amount)});return m};
+  const pi=agg(D.payments),pe=agg(D.expenses);
+  const mx=Math.max(1,...months.map(d=>Math.max(pi[key(d)]||0,pe[key(d)]||0)));
+  $("bars").innerHTML=months.map(d=>`<div class="m"><div class="pair"><i style="height:${(pi[key(d)]||0)/mx*100}%;background:#4ade80"></i><i style="height:${(pe[key(d)]||0)/mx*100}%;background:#fbbf24"></i></div>${d.toLocaleString("en",{month:"short"})}</div>`).join("");
+}
+const STAT=["New","Contacted","Quoted","Converted","Declined"];
+function renderOrders(){
+  $("adminOrders").innerHTML=D.orders.map(o=>`<div class="proj">
+   <b>${esc(o.name||o.place||"Order")}</b> <span class="badge ${esc(o.status)}">${esc(o.status)}</span><br>
+   <span class="small">📍 ${esc(o.place)} · 📞 ${esc(o.phone)} · ${esc(o.email)}<br>${new Date(o.created).toLocaleString()}</span>
+   <p>${esc(o.details)}</p>
+   <div class="thumbs">${(o.photos||[]).map(p=>`<img data-act="zoom" src="${esc(p)}" alt="">`).join("")}</div>
+   <div class="row" style="margin-top:10px">
+     <select data-os="${esc(o.id)}">${STAT.map(s=>`<option ${s===o.status?"selected":""}>${s}</option>`).join("")}</select>
+     <a class="wa sm" href="${waLink(o.phone)}" target="_blank" rel="noopener">WhatsApp</a>
+     <button class="sm" data-act="toproj" data-id="${esc(o.id)}">➜ Project</button>
+     <button class="sm danger" data-act="block" data-id="${esc(o.id)}">🚫 Block</button>
+   </div></div>`).join("")||'<p class="small">No orders yet.</p>';
+  document.querySelectorAll("[data-os]").forEach(s=>s.onchange=async()=>{
+    await db.collection("orders").doc(s.dataset.os).update({status:s.value});toast("Status updated");loadAdmin()});
+}
+function toProject(id){
+  const o=D.orders.find(x=>x.id===id);if(!o)return;
+  $("pClient").value=o.name||"";$("pPhone").value=o.phone||"";$("pPlace").value=o.place||"";$("pNotes").value=o.details||"";
+  tab("projects");window.scrollTo({top:0,behavior:"smooth"});toast("Order copied into the project form");
+}
+$("btnProject").onclick=e=>busy(e.target,async()=>{
+  const name=$("pClient").value.trim(),phone=$("pPhone").value.trim();
+  if(!name)throw new Error("Client name is required");
+  const now=new Date().toISOString();
+  const cid=(phone.replace(/\D/g,"")||name.toLowerCase().replace(/\W+/g,"-"));
+  await db.collection("clients").doc(cid).set({name,phone,place:$("pPlace").value.trim(),updated:now},{merge:true});
+  await db.collection("projectArchive").add({clientId:cid,client:name,phone,place:$("pPlace").value.trim(),service:$("pService").value,total:num($("pTotal").value),paid:0,expense:0,status:"In Progress",notes:$("pNotes").value.trim(),created:now});
+  ["pClient","pPhone","pPlace","pTotal","pNotes"].forEach(i=>$(i).value="");
+  toast("Saved to Vault 🔐");await loadAdmin();
+});
+const PST=["New","In Progress","Done","Paid in Full"];
+function renderProjects(){
+  const q=($("pSearch").value||"").toLowerCase();
+  $("projList").innerHTML=D.projects.filter(p=>!q||[p.client,p.phone,p.service,p.place,p.status].join(" ").toLowerCase().includes(q)).map(p=>{
+    const f=projFin(p),pct=num(p.total)?Math.min(100,f.paid/num(p.total)*100):0;
+    const pays=D.payments.filter(x=>x.projectId===p.id),exs=D.expenses.filter(x=>x.projectId===p.id);
+    const ln=(x,a)=>`<div class="line"><span>${new Date(x.date).toLocaleDateString()} · ${esc(x.note)||"-"}</span><span>${M(x.amount)} ${a==="delp"?`<a href="#" data-act="rcp" data-id="${esc(x.id)}" style="text-decoration:none" onclick="return false">🧾</a> `:""}<a href="#" data-act="${a}" data-id="${esc(x.id)}" style="color:#ff6b6b;text-decoration:none" onclick="return false">✕</a></span></div>`;
+    return`<div class="proj">
+     <b>${esc(p.client)}</b> · ${esc(p.service)}<br><span class="small" style="color:#9fb0a4">📍 ${esc(p.place)} · 📞 ${esc(p.phone)}</span>
+     <div class="prog"><i style="width:${pct}%"></i></div>
+     <div class="line"><span>Total</span><b>${M(p.total)}</b></div>
+     <div class="line"><span>Paid</span><b class="inc">${M(f.paid)}</b></div>
+     <div class="line"><span>Spent</span><b class="exp">${M(f.spent)}</b></div>
+     <div class="line"><span>Profit</span><b class="prf">${M(f.profit)}</b></div>
+     <div class="line"><span>Owes</span><b class="owe">${M(f.owes)}</b></div>
+     ${p.notes?`<p class="small" style="color:#cbd5cf">📝 ${esc(p.notes)}</p>`:""}
+     <div class="row" style="margin-top:8px">
+       <select data-ps="${esc(p.id)}">${PST.map(s=>`<option ${s===p.status?"selected":""}>${s}</option>`).join("")}</select>
+       <button class="sm" data-act="pay" data-id="${esc(p.id)}">+ Payment</button>
+       <button class="sm" style="background:#b45309" data-act="exp" data-id="${esc(p.id)}">+ Expense</button>
+     </div>
+     <div class="row" style="margin-top:6px">
+       <button class="sm alt" data-act="toggle" data-id="${esc(p.id)}">History (${pays.length+exs.length})</button>
+       <a class="wa sm" href="${waLink(p.phone)}" target="_blank" rel="noopener">WhatsApp</a>
+       <button class="sm" style="background:#7c3aed" data-act="inv" data-id="${esc(p.id)}">🧾 Invoice</button>
+       <button class="sm danger" data-act="delproj" data-id="${esc(p.id)}">Delete</button>
+     </div>
+     <div id="d-${esc(p.id)}" class="hidden" style="margin-top:8px">
+       ${num(p.paid)?`<div class="line"><span>Earlier recorded payment</span><span>${M(p.paid)}</span></div>`:""}
+       ${num(p.expense)?`<div class="line"><span>Earlier recorded expense</span><span>${M(p.expense)}</span></div>`:""}
+       ${pays.map(x=>ln(x,"delp")).join("")}${exs.map(x=>ln(x,"dele")).join("")}
+       ${pays.length+exs.length+num(p.paid)+num(p.expense)?"":'<p class="small">Nothing recorded yet.</p>'}
+     </div></div>`}).join("")||'<p class="small">No projects yet.</p>';
+  document.querySelectorAll("[data-ps]").forEach(s=>s.onchange=async()=>{
+    await db.collection("projectArchive").doc(s.dataset.ps).update({status:s.value});toast("Status updated");loadAdmin()});
+}
+function renderClients(){
+  $("clientList").innerHTML=D.clients.sort((a,b)=>(a.name||"").localeCompare(b.name||"")).map(c=>{
+    const ps=D.projects.filter(p=>p.clientId===c.id);
+    return`<div class="proj"><b>${esc(c.name)}</b><br><span class="small" style="color:#9fb0a4">📍 ${esc(c.place)} · 📞 ${esc(c.phone)}</span><br>
+    ${ps.length} project(s) · Billed ${M(sum(ps,p=>p.total))} · Owes <span class="owe">${M(sum(ps,p=>projFin(p).owes))}</span><br>
+    <a class="wa sm" style="margin-top:8px" href="${waLink(c.phone)}" target="_blank" rel="noopener">WhatsApp</a></div>`}).join("")||'<p class="small">Clients are added automatically when you save a project.</p>';
+}
+/* payment / expense dialog */
+let dCol,dProj;
+function openDlg(col,id,title){dCol=col;dProj=id;$("dlgTitle").textContent=title;$("dAmount").value="";$("dNote").value="";$("dlg").showModal()}
+$("dCancel").onclick=()=>$("dlg").close();
+$("dSave").onclick=e=>busy(e.target,async()=>{
+  const amount=num($("dAmount").value);if(amount<=0)throw new Error("Enter an amount");
+  await db.collection(dCol).add({projectId:dProj,amount,note:$("dNote").value.trim(),date:new Date().toISOString()});
+  $("dlg").close();toast("Saved ✅");await loadAdmin();
+});
+$("pSearch").oninput=renderProjects;
+$("btnCsv").onclick=()=>{
+  const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+  const rows=[["Client","Phone","Service","Status","Total","Paid","Spent","Profit","Owes","Date"]];
+  D.projects.forEach(p=>{const f=projFin(p);rows.push([p.client,p.phone,p.service,p.status,num(p.total),f.paid,f.spent,f.profit,f.owes,(p.created||"").slice(0,10)])});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([rows.map(r=>r.map(q).join(",")).join("\n")],{type:"text/csv"}));
+  a.download="smartscape-projects-"+new Date().toISOString().slice(0,10)+".csv";a.click();
+};
+function invoice(id){
+  const p=D.projects.find(x=>x.id===id);if(!p)return;
+  const f=projFin(p),pays=D.payments.filter(x=>x.projectId===id);
+  const w=window.open("","_blank");if(!w){toast("Allow pop-ups to print invoices");return}
+  w.document.write(`<!DOCTYPE html><meta charset="utf-8"><title>Invoice ${esc(p.client)}</title>
+  <style>body{font-family:Arial;max-width:640px;margin:30px auto;color:#222}h1{color:#1e7a34;margin:0}table{width:100%;border-collapse:collapse;margin-top:16px}td,th{padding:8px;border-bottom:1px solid #ddd;text-align:left}td:last-child,th:last-child{text-align:right}.t{font-size:18px;font-weight:700}</style>
+  <h1>SmartScape 🌿</h1><p>Paving • Landscaping • Lawn Installation<br>📞 56044031 / 62044031 · smartscape01@gmail.com</p><hr>
+  <p><b>Invoice for:</b> ${esc(p.client)}<br>📞 ${esc(p.phone)} · 📍 ${esc(p.place)}<br><b>Date:</b> ${new Date().toLocaleDateString()}</p>
+  <table><tr><th>Service</th><th>Amount</th></tr><tr><td>${esc(p.service)}</td><td>${M(p.total)}</td></tr></table>
+  <table><tr><th>Payments received</th><th>Amount</th></tr>
+  ${num(p.paid)?`<tr><td>Earlier payment</td><td>${M(p.paid)}</td></tr>`:""}
+  ${pays.map(x=>`<tr><td>${new Date(x.date).toLocaleDateString()} ${esc(x.note)}</td><td>${M(x.amount)}</td></tr>`).join("")}
+  <tr class="t"><td>Total paid</td><td>${M(f.paid)}</td></tr><tr class="t"><td>Balance due</td><td>${M(f.owes)}</td></tr></table>
+  <p style="margin-top:30px">Thank you for choosing SmartScape! 🌿</p>`);
+  w.document.close();setTimeout(()=>w.print(),400);
+}
+async function blockUser(id){
+  const o=D.orders.find(x=>x.id===id);if(!o)return;
+  if(!confirm("Block "+o.email+" from ordering?"))return;
+  await db.collection("blocked").doc(o.email.toLowerCase()).set({at:new Date().toISOString(),by:auth.currentUser.email});
+  await db.collection("orders").doc(id).update({status:"Declined"});
+  toast("Blocked 🚫");loadAdmin();
+}
+function receipt(id){
+  const x=D.payments.find(v=>v.id===id),p=x&&D.projects.find(v=>v.id===x.projectId);if(!p)return;
+  const f=projFin(p),w=window.open("","_blank");if(!w){toast("Allow pop-ups to print receipts");return}
+  w.document.write(`<!DOCTYPE html><meta charset="utf-8"><title>Receipt</title>
+  <style>body{font-family:Arial;max-width:480px;margin:30px auto;color:#222;border:2px solid #1e7a34;border-radius:12px;padding:22px}h1{color:#1e7a34;margin:0}.big{font-size:26px;font-weight:700;color:#1e7a34}</style>
+  <h1>SmartScape 🌿</h1><p>📞 56044031 / 62044031</p><h3>PAYMENT RECEIPT #${esc(id.slice(0,6).toUpperCase())}</h3>
+  <p><b>Date:</b> ${new Date(x.date).toLocaleDateString()}<br><b>Received from:</b> ${esc(p.client)}<br><b>For:</b> ${esc(p.service)} ${esc(x.note)}</p>
+  <p class="big">${M(x.amount)}</p><p>Project total: ${M(p.total)}<br>Total paid so far: ${M(f.paid)}<br><b>Balance due: ${M(f.owes)}</b></p>
+  <p>Thank you! 🌿</p>`);
+  w.document.close();setTimeout(()=>w.print(),400);
+}
+/* PWA install */
+let ip;const standalone=matchMedia("(display-mode: standalone)").matches;
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();ip=e;$("btnInstall").classList.remove("hidden")});
+if(/iphone|ipad/i.test(navigator.userAgent)&&!standalone)$("btnInstall").classList.remove("hidden");
+$("btnInstall").onclick=async()=>{if(ip){ip.prompt();await ip.userChoice;ip=null;$("btnInstall").classList.add("hidden")}else toast("Tap Share, then 'Add to Home Screen'")};
+addEventListener("appinstalled",()=>$("btnInstall").classList.add("hidden"));
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+/* Language: English / Sesotho */
+const ST={"We build the outdoors you dream about":"Re haha kantle eo u e lorang","Get a Quote 👋":"Kopa Theko 👋","Sign In":"Kena","Create Account":"Theha Akhaonte","Forgot password?":"U lebetse phasewete?","Place a New Order 📝":"Fana ka Odara e Ncha 📝","Submit Order":"Romella Odara","My Orders":"Liodara Tsa Ka","Logout":"Tsoa","Our Services":"Litšebeletso Tsa Rona","Contact Us":"Ikopanye le Rona","Quality of Our Work 📸":"Boleng ba Mosebetsi oa Rona 📸","Email":"Imeile","Password (min 6 characters)":"Phasewete (bonyane litlhaku tse 6)","Your name":"Lebitso la hau","Where are you? Village / Town":"U kae? Motse / Toropo","Phone e.g. 56044031":"Mohala, mohlala 56044031","What do you need? e.g. Paving a 5m x 4m driveway...":"U hloka eng? Mohlala: Paving ea 5m x 4m...","Verify your email":"Netefatsa imeile ea hau","🔑 Change password":"🔑 Fetola phasewete"};
+let LANG="en";try{LANG=localStorage.getItem("lang")||"en"}catch(e){}
+const ORIG=new WeakMap();
+function applyLang(){
+  document.querySelectorAll(".hero,#authCard,#customer,#pub,#verifyCard").forEach(r=>{
+    const w=document.createTreeWalker(r,NodeFilter.SHOW_TEXT);let n;
+    while(n=w.nextNode()){const o=ORIG.get(n)??n.nodeValue,k=o.trim();
+      if(ST[k]||ORIG.has(n)){ORIG.set(n,o);n.nodeValue=LANG==="st"&&ST[k]?o.replace(k,ST[k]):o}}
+    r.querySelectorAll("[placeholder]").forEach(e=>{if(!e.dataset.ph)e.dataset.ph=e.placeholder;e.placeholder=(LANG==="st"&&ST[e.dataset.ph])||e.dataset.ph});
+  });
+  $("btnLang").textContent=LANG==="st"?"🌍 English":"🌍 Sesotho";
+}
+$("btnLang").onclick=()=>{LANG=LANG==="st"?"en":"st";try{localStorage.setItem("lang",LANG)}catch(e){}applyLang()};
+applyLang();
+async function del(col,id){if(confirm("Delete this record?")){await db.collection(col).doc(id).delete();loadAdmin()}}
+async function delProject(id){
+  if(!confirm("Delete this project and all its payments & expenses?"))return;
+  const b=db.batch();
+  [...D.payments.filter(x=>x.projectId===id).map(x=>["payments",x.id]),...D.expenses.filter(x=>x.projectId===id).map(x=>["expenses",x.id]),["projectArchive",id]]
+    .forEach(([c,i])=>b.delete(db.collection(c).doc(i)));
+  await b.commit();toast("Project deleted");loadAdmin();
 }
 </script>
 </body>
-  </html> 
+</html>
