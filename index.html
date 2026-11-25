@@ -23,6 +23,11 @@ button{width:100%;padding:13px;border:0;border-radius:10px;background:#1e7a34;co
 .proj{background:#222;padding:12px;border-radius:10px;margin:10px 0}
 .owe{color:#ff6b6b;font-weight:700}
 .paid{color:#4ade80;font-weight:700}
+.spent{color:#fbbf24;font-weight:700}
+.profit{color:#60a5fa;font-weight:700}
+.tabBtn{background:#222;color:#fff;margin-bottom:8px}
+.tabBtn.active{background:#facc15;color:#111}
+.totalsBox{background:#facc15;color:#111;padding:14px;border-radius:10px;margin-top:12px;line-height:1.7}
 </style>
 </head>
 <body>
@@ -39,7 +44,15 @@ button{width:100%;padding:13px;border:0;border-radius:10px;background:#1e7a34;co
 <input id="pass" type="password" placeholder="Password">
 <button onclick="login()">Sign In</button>
 <button onclick="signup()" style="background:#222;margin-top:8px">Create Account</button>
-<p class="small">Create an account to place an order. Only admins can see all orders.</p>
+<p class="small">Create an account to place an order.</p>
+</div>
+
+<div class="card hidden" id="adminTabs">
+<h2>👑 Admin</h2>
+<button class="tabBtn active" id="tabOrdersBtn" onclick="showAdminTab('orders')">📦 Orders</button>
+<button class="tabBtn" id="tabAddBtn" onclick="showAdminTab('add')">➕ Add to Vault</button>
+<button class="tabBtn" id="tabVaultBtn" onclick="showAdminTab('vault')">🔐 Vault</button>
+<button onclick="logout()" style="background:#999;margin-top:8px">Logout</button>
 </div>
 
 <div class="card hidden" id="orderCard">
@@ -59,24 +72,28 @@ button{width:100%;padding:13px;border:0;border-radius:10px;background:#1e7a34;co
 <div id="ordersList"></div>
 </div>
 
-<!-- VAULT - ONLY ADMIN SEES THIS, HIDDEN FROM CUSTOMERS -->
-<div class="card vault-card hidden" id="vaultCard">
-<h2>🔐 SmartScape VAULT - ADMIN ONLY</h2>
+<div class="card vault-card hidden" id="vaultFormCard">
+<h2>➕ Add to Vault - ADMIN ONLY</h2>
 <p class="small" style="color:#aaa">Private: Money, owing, notes. Customers CANNOT see this.</p>
 <input id="vClient" placeholder="Client Name">
 <input id="vPhone" placeholder="Client Phone">
 <select id="vService"><option>Paving</option><option>Landscaping</option><option>Lawn Installation</option><option>Yard Decoration</option><option>Maintenance</option></select>
 <input id="vTotal" type="number" placeholder="Total Price (M)">
-<input id="vPaid" type="number" placeholder="Amount Paid (M)">
+<input id="vPaid" type="number" placeholder="Amount Paid / Income (M)">
+<input id="vExpense" type="number" placeholder="Expenditure / Money You Spent (M) - Material + Labour">
 <select id="vStatus"><option>New</option><option>In Progress</option><option>Done</option><option>Paid in Full</option></select>
 <textarea id="vNotes" placeholder="Private notes: e.g. Client said pay Friday, problem with material..."></textarea>
 <input id="vDoc" placeholder="Doc / Photo Link (Google Drive link)">
 <button onclick="addProject()" style="background:#facc15;color:#111">+ Add to Vault</button>
-<div id="vaultList" style="margin-top:14px"></div>
-<p id="vaultTotals" style="font-weight:700"></p>
 </div>
 
-<div class="card">
+<div class="card vault-card hidden" id="vaultListCard">
+<h2>🔐 SmartScape VAULT - ADMIN ONLY</h2>
+<div id="vaultTotals" class="totalsBox">Loading totals...</div>
+<div id="vaultList" style="margin-top:14px"></div>
+</div>
+
+<div class="card" id="servicesCard">
 <h2>Our Services</h2>
 <div class="service">🌿 Landscaping</div>
 <div class="service">🌱 Lawn Decoration and Maintenance</div>
@@ -85,7 +102,7 @@ button{width:100%;padding:13px;border:0;border-radius:10px;background:#1e7a34;co
 <div class="service">🌳 Lawn Installation</div>
 </div>
 
-<div class="card">
+<div class="card" id="galleryCard">
 <h2>Quality of Our Work 📸</h2>
 <div class="grid">
 <img src="https://i.ibb.co/zVBSL6Zg/photo1.jpg">
@@ -98,7 +115,7 @@ button{width:100%;padding:13px;border:0;border-radius:10px;background:#1e7a34;co
 <p class="small">Real work by SmartScape. Paving, Landscaping, Lawn Installation.</p>
 </div>
 
-<div class="card">
+<div class="card" id="contactCard">
 <h2>Contact Us</h2>
 <p>📞 56044031 / 62044031</p>
 <p>✉️ mpoboleliteboho@gmail.com<br>smartscape01@gmail.com</p>
@@ -122,6 +139,16 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const ADMINS = ["mpoboleliteboho@gmail.com","limphomofoka805@gmail.com"];
 const isAdmin = (email)=> ADMINS.includes((email||"").toLowerCase());
+function showAdminTab(tab){
+  document.getElementById("ordersCard").classList.toggle("hidden", tab!=="orders");
+  document.getElementById("vaultFormCard").classList.toggle("hidden", tab!=="add");
+  document.getElementById("vaultListCard").classList.toggle("hidden", tab!=="vault");
+  document.getElementById("tabOrdersBtn").classList.toggle("active", tab==="orders");
+  document.getElementById("tabAddBtn").classList.toggle("active", tab==="add");
+  document.getElementById("tabVaultBtn").classList.toggle("active", tab==="vault");
+  if(tab==="vault") loadVault();
+  if(tab==="orders") loadOrders();
+}
 async function signup(){ try{ await auth.createUserWithEmailAndPassword(email.value,pass.value); alert("Account created!"); }catch(e){alert(e.message)} }
 async function login(){ try{ await auth.signInWithEmailAndPassword(email.value,pass.value); }catch(e){alert(e.message)} }
 async function logout(){ await auth.signOut(); location.reload(); }
@@ -134,32 +161,47 @@ async function placeOrder(){
 }
 async function addProject(){
   if(!isAdmin(auth.currentUser.email)) return alert("Admin only");
-  const total = Number(vTotal.value||0), paid = Number(vPaid.value||0);
-  await db.collection("projectArchive").add({client:vClient.value, phone:vPhone.value, service:vService.value, total, paid, balance: total-paid, status:vStatus.value, notes:vNotes.value, doc:vDoc.value, created:new Date().toISOString()});
-  alert("Saved to Vault!");
-  vClient.value=""; vPhone.value=""; vTotal.value=""; vPaid.value=""; vNotes.value=""; vDoc.value="";
-  loadVault();
+  const total = Number(vTotal.value||0), paid = Number(vPaid.value||0), expense = Number(vExpense.value||0);
+  const profit = paid - expense;
+  await db.collection("projectArchive").add({client:vClient.value, phone:vPhone.value, service:vService.value, total, paid, expense, profit, balance: total-paid, status:vStatus.value, notes:vNotes.value, doc:vDoc.value, created:new Date().toISOString()});
+  alert("Saved to Vault! Totals updated automatically.");
+  vClient.value=""; vPhone.value=""; vTotal.value=""; vPaid.value=""; vExpense.value=""; vNotes.value=""; vDoc.value="";
+  showAdminTab('vault');
 }
 async function loadVault(){
   if(!isAdmin(auth.currentUser.email)) return;
   const snap = await db.collection("projectArchive").orderBy("created","desc").get();
-  let tot=0, pd=0, ow=0;
+  let tot=0, pd=0, ow=0, exp=0, prof=0;
   vaultList.innerHTML = snap.docs.map(d=>{
-    const o=d.data(); tot+=o.total||0; pd+=o.paid||0; ow+=o.balance||0;
-    return `<div class="proj"><b>${o.client||""}</b> - ${o.service||""} - ${o.status||""}<br>📞 ${o.phone||""}<br>Total: M${o.total} | <span class="paid">Paid: M${o.paid}</span> | <span class="owe">Owes: M${o.balance}</span><br><span class="small">${o.notes||""}</span><br>${o.doc?`<a href="${o.doc}" target="_blank" style="color:#facc15">📄 View Doc</a>`:""}<br><button onclick="delProj('${d.id}')" style="background:#dc2626;margin-top:8px;padding:8px">Delete</button></div>`
+    const o=d.data();
+    const oExp = Number(o.expense||0);
+    const oPaid = Number(o.paid||0);
+    const oProfit = Number(o.profit!==undefined ? o.profit : (oPaid - oExp));
+    tot+=Number(o.total||0); pd+=oPaid; ow+=Number(o.balance||0); exp+=oExp; prof+=oProfit;
+    return `<div class="proj"><b>${o.client||""}</b> - ${o.service||""} - ${o.status||""}<br>📞 ${o.phone||""}<br>Total: M${o.total} | <span class="paid">Paid / Income: M${o.paid}</span><br><span class="spent">Spent / Expenditure: M${oExp}</span> | <span class="profit">Profit: M${oProfit}</span> | <span class="owe">Owes: M${o.balance}</span><br><span class="small">${o.notes||""}</span><br>${o.doc?`<a href="${o.doc}" target="_blank" style="color:#facc15">📄 View Doc</a>`:""}<br><button onclick="delProj('${d.id}')" style="background:#dc2626;margin-top:8px;padding:8px">Delete</button></div>`
   }).join("") || "No vault projects yet.";
-  vaultTotals.innerText = `TOTAL: M${tot} | COLLECTED: M${pd} | STILL OWED TO YOU: M${ow}`;
+  vaultTotals.innerHTML = `<b>📊 ALL PROJECTS - AUTOMATIC TOTALS</b><br>💰 Total Income (Paid): <b>M${pd}</b><br>💸 Total Expenditure (Spent): <b>M${exp}</b><br>📈 Total Profit (Income - Spent): <b>M${prof}</b><br>🧾 Total Project Value: <b>M${tot}</b><br>🔴 Still Owed To You: <b>M${ow}</b>`;
 }
 async function delProj(id){ if(confirm("Delete this vault project?")){ await db.collection("projectArchive").doc(id).delete(); loadVault(); } }
 auth.onAuthStateChanged(async (user)=>{
   if(!user) return;
   document.getElementById("authCard").classList.add("hidden");
-  document.getElementById("orderCard").classList.remove("hidden");
-  document.getElementById("ordersCard").classList.remove("hidden");
-  document.getElementById("who").innerText = isAdmin(user.email) ? "👑 You are ADMIN - You see ALL orders + VAULT" : "Welcome, Buyer - " + user.email;
-  document.getElementById("ordersTitle").innerText = isAdmin(user.email) ? "All Orders (Admin)" : "My Orders";
-  if(isAdmin(user.email)){ document.getElementById("vaultCard").classList.remove("hidden"); loadVault(); }
-  loadOrders();
+  if(isAdmin(user.email)){
+    document.getElementById("adminTabs").classList.remove("hidden");
+    document.getElementById("orderCard").classList.add("hidden");
+    document.getElementById("servicesCard").classList.add("hidden");
+    document.getElementById("galleryCard").classList.add("hidden");
+    document.getElementById("contactCard").classList.add("hidden");
+    document.getElementById("ordersTitle").innerText = "All Orders (Admin)";
+    document.getElementById("who").innerText = "👑 You are ADMIN";
+    showAdminTab('orders');
+  } else {
+    document.getElementById("orderCard").classList.remove("hidden");
+    document.getElementById("ordersCard").classList.remove("hidden");
+    document.getElementById("who").innerText = "Welcome, Buyer - " + user.email;
+    document.getElementById("ordersTitle").innerText = "My Orders";
+    loadOrders();
+  }
 });
 async function loadOrders(){
   const user = auth.currentUser; if(!user) return;
