@@ -3,18 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#1e7a34"><link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#0f3d22">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<meta name="description" content="SmartScape: paving, landscaping and lawn installation. Get a free quote on WhatsApp.">
+<meta property="og:title" content="SmartScape | Paving • Landscaping • Lawn Installation">
+<meta property="og:description" content="We build the outdoors you dream about. Get a free quote today.">
+<meta property="og:image" content="https://i.ibb.co/zhG5Z7Pz/poster.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"SmartScape","description":"Paving, landscaping and lawn installation","telephone":["+26656044031","+26662044031"],"email":"smartscape01@gmail.com","image":"https://i.ibb.co/zhG5Z7Pz/poster.jpg","address":{"@type":"PostalAddress","addressCountry":"LS"}}</script>
 <title>SmartScape | Paving • Landscaping • Lawn Installation</title>
 <style>
-:root{--g:#1e7a34;--g2:#14572a;--bg:#f3f7f1;--ink:#1b2420;--mut:#6b776f;--card:#fff;--line:#e4ebe2;--gold:#facc15;--dk:#121714;--dk2:#1c241f;--red:#ef4444;--blue:#60a5fa}
+:root{--g:#1e7a34;--g2:#14572a;--bg:#f3f7f1;--ink:#1b2420;--mut:#6b776f;--card:#fff;--line:#e4ebe2;--gold:#bbf7d0;--dk:#121714;--dk2:#1c241f;--red:#ef4444;--blue:#60a5fa}
 *{box-sizing:border-box}
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink);line-height:1.45}
 .wrap{max-width:760px;margin:0 auto;padding:0 12px 40px}
 .hero{background:linear-gradient(160deg,var(--g2),var(--g));color:#fff;text-align:center;padding:26px 16px 30px;border-radius:0 0 28px 28px}
 .hero img{width:100%;max-width:520px;border-radius:16px;box-shadow:0 8px 28px #0004}
 .hero h1{margin:14px 0 4px;font-size:26px}.hero p{margin:0;opacity:.9}
-.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}
-.chip{background:#ffffff22;padding:6px 12px;border-radius:99px;font-size:13px}
 .card{background:var(--card);margin:14px 0;padding:18px;border-radius:16px;box-shadow:0 2px 10px #0000000d}
 .card h2{margin:0 0 10px;font-size:19px}
 input,textarea,select{width:100%;padding:12px;margin:6px 0;border:1px solid #d5ddd3;border-radius:10px;font:inherit;background:#fff;color:inherit}
@@ -38,7 +44,7 @@ button.alt{background:#2b3530}button.ghost{background:#e9efe7;color:var(--ink)}b
 /* admin */
 .admin{background:var(--dk);color:#fff;border-radius:18px;padding:14px;margin:14px 0}
 .admin h2{margin:4px 0 10px}
-.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;position:sticky;top:0;z-index:5;background:var(--dk);padding:6px 0}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;position:sticky;top:0;z-index:5;background:var(--dk);padding:6px 0}
 .tabs button{background:var(--dk2);margin:0;padding:10px 4px;font-size:13px}.tabs button.on{background:var(--gold);color:#111}
 .admin .box{background:var(--dk2);border-radius:12px;padding:14px;margin:10px 0}
 .admin input,.admin textarea,.admin select{background:#273029;color:#fff;border-color:#3a463d}
@@ -59,22 +65,99 @@ dialog::backdrop{background:#000a}
 #toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:99px;font-size:14px;z-index:60;opacity:0;pointer-events:none;transition:.25s}
 #toast.show{opacity:1}
 footer{text-align:center;color:var(--mut);font-size:12px;margin-top:20px}
+#nav{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#ffffffee;backdrop-filter:blur(8px);box-shadow:0 1px 8px #0001}
+#nav b{color:var(--g2);font-size:17px}
+#authBack{position:fixed;inset:0;background:#000a;z-index:44}
+#authCard{position:fixed;z-index:45;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92vw,420px);max-height:90vh;overflow:auto;margin:0}
+.steps{display:grid;gap:12px}.steps div{display:flex;gap:12px;align-items:center}
+.steps b{background:var(--g);color:#fff;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;flex:none}
+.fab{position:fixed;right:16px;bottom:18px;width:54px;height:54px;border-radius:50%;background:#25D366;color:#fff;display:grid;place-items:center;font-size:26px;text-decoration:none;box-shadow:0 6px 18px #0004;z-index:20}
+html{scroll-behavior:smooth}
+.grid img{cursor:zoom-in;transition:transform .25s}.grid img:active{transform:scale(.97)}
+.grid img:first-child{grid-column:span 2;height:190px}
+.trust{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:16px 0 4px}
+.trust span{background:#fff;padding:8px 12px;border-radius:99px;font-size:13px;font-weight:600;box-shadow:0 1px 6px #0001}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}.rv.in{opacity:1;transform:none}
+#contactCard a:not(.wa){color:var(--g);font-weight:700}
+.ba img{width:100%;border-radius:12px;cursor:zoom-in}.ba span{display:block;margin:8px 0 12px;font-size:13px;color:var(--mut)}
+.stars{letter-spacing:2px}
+
+/* ===== modern look ===== */
+body{font-family:Poppins,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.card{border-radius:22px}.card h2{font-size:22px;font-weight:800}
+.hero{position:relative;overflow:hidden;text-align:left;padding:34px 18px 0;background:#0f3d22;border-radius:0 0 34px 34px}
+.hero-in{position:relative;z-index:2;max-width:760px;margin:0 auto}
+.hero h1{font-size:clamp(34px,9vw,56px);line-height:1.08;font-weight:800;margin:16px 0 12px}
+.hero h1 em{font-style:normal;background:#bbf7d0;color:#111;padding:0 10px;border-radius:12px;display:inline-block;transform:rotate(-2deg)}
+.hero p{opacity:.9;max-width:520px;font-size:16px;margin:0}
+.tag{display:inline-block;background:#ffffff1f;padding:7px 14px;border-radius:99px;font-size:13px}
+.ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;align-items:center}
+.cta{width:auto;background:#bbf7d0;color:#111;padding:15px 22px;font-size:16px;border-radius:99px;margin:0}
+.cta2{color:#fff;border:2px solid #ffffff66;padding:13px 20px;border-radius:99px;text-decoration:none;font-weight:700}
+.shape{position:absolute;border-radius:50%;z-index:1}
+.s1{width:240px;height:240px;background:#bbf7d0;right:-80px;top:-70px}
+.s2{width:110px;height:110px;background:#1e7a34;right:70px;top:230px}
+.s3{width:70px;height:70px;border:10px solid #bbf7d0;left:-24px;bottom:150px}
+.heroimg{position:relative;margin-top:28px}
+.heroimg img{width:100%;max-width:none;height:260px;object-fit:cover;border-radius:26px 26px 0 0;display:block;box-shadow:0 -4px 30px #0005}
+.float{position:absolute;background:#fff;color:#111;padding:9px 14px;border-radius:14px;font-size:13px;font-weight:700;box-shadow:0 8px 20px #0004}
+.f1{left:12px;top:-14px}.f2{right:12px;bottom:16px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+.big{margin:0;padding:18px 14px;text-align:left;font-size:16px;border-radius:20px;line-height:1.3}
+.big small{display:block;font-weight:500;opacity:.75;margin-top:6px;font-size:12px}
+.big.yellow{background:#bbf7d0;color:#111}.big.white{background:#fff;color:var(--ink);box-shadow:0 2px 12px #0001}
+.svc{background:transparent;box-shadow:none;padding:0}
+.svc .service{background:#fff;border-radius:20px;padding:16px;margin:10px 0;border:0;box-shadow:0 2px 12px #0001}
+.svc .service:nth-child(2){background:#bbf7d0}.svc .service:nth-child(3){background:#dff3e3}.svc .service:nth-child(4){background:#14572a;color:#fff}
+.svc .service .small{color:inherit;opacity:.8}.svc .service b{font-size:17px}
+.dark{background:linear-gradient(160deg,#0f3d22,#14572a);color:#fff}
+.dark .steps b{background:#bbf7d0;color:#111}
+.hero{position:relative;background:linear-gradient(160deg,#0f3d1f,#14572a 60%,#1e7a34);color:#fff;text-align:left;padding:30px 18px 36px;border-radius:0 0 32px 32px;overflow:hidden}
+.hero h1{font-size:clamp(34px,9.5vw,54px);line-height:1.05;margin:14px 0 8px;letter-spacing:-.02em;font-weight:800}
+.hl{color:var(--gold)}
+.pill{display:inline-block;background:#ffffff22;padding:6px 12px;border-radius:99px;font-size:13px}
+.hero p{font-size:17px;opacity:.92;margin:0 0 18px}
+.ctaRow{display:flex;gap:10px;flex-wrap:wrap}
+.cta{width:auto;padding:14px 22px;border-radius:99px;background:#fff;color:var(--g2);font-weight:800;font-size:16px;margin:0;display:inline-block}
+a.ghostA{text-decoration:none;background:#ffffff22;color:#fff;font-weight:700}
+.heroImg{position:relative;margin-top:26px}
+.heroImg img{width:100%;max-width:none;border-radius:24px;box-shadow:0 14px 40px #0006;border:4px solid #ffffff33;display:block}
+.badge2{position:absolute;left:14px;bottom:14px;background:#fff;color:var(--g2);font-weight:800;font-size:12px;padding:6px 12px;border-radius:99px}
+@media(min-width:720px){.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center;padding:48px 8vw}.heroImg{margin-top:0}}
+.card{border-radius:20px}
+.service span.i{background:#e9f4e6;border-radius:14px;width:48px;height:48px;display:grid;place-items:center;flex:none}
+.band{background:linear-gradient(135deg,var(--g2),var(--g));color:#fff;border-radius:22px;padding:26px 18px;margin:14px 0;text-align:center}
+.band h2{margin:0 0 6px;font-size:24px;letter-spacing:-.01em}.band p{margin:0}
+.band button{background:#fff;color:var(--g2);max-width:300px;margin:14px auto 0;display:block;border-radius:99px}
+.cta{background:#fff;color:var(--g2)}
+.band{background:linear-gradient(160deg,#14572a,#1e7a34);color:#fff}
+.band button{background:#fff;color:var(--g2)}
+.badge2{background:#fff;color:var(--g2)}
 </style>
 </head>
 <body>
+<nav id="nav"><b>SmartScape 🌿</b><button id="btnNavLogin" class="sm">Login</button></nav>
 
 <header class="hero">
-  <img src="https://i.ibb.co/zhG5Z7Pz/poster.jpg" alt="SmartScape">
-  <h1>SmartScape 🌿</h1>
-  <p>We build the outdoors you dream about</p>
-  <div class="chips"><span class="chip">🧱 Paving</span><span class="chip">🌿 Landscaping</span><span class="chip">🌳 Lawn Installation</span></div>
-  <div class="row" style="margin-top:12px;justify-content:center"><button id="btnInstall" class="sm hidden" style="background:#facc15;color:#111">📲 Install App</button><button id="btnLang" class="sm" style="background:#ffffff33">🌍 Sesotho</button></div>
+  <div class="heroTxt">
+    <span class="pill">🌿 Paving • Landscaping • Lawns</span>
+    <h1>Your yard, <span class="hl">done right.</span></h1>
+    <p>We build the outdoors you dream about</p>
+    <div class="ctaRow">
+      <button id="btnCta" class="cta">📝 Get a Free Quote</button>
+      <a class="cta ghostA" href="https://wa.me/26656044031" target="_blank" rel="noopener">💬 WhatsApp</a>
+    </div>
+    <div class="row" style="justify-content:flex-start;margin-top:12px"><button id="btnInstall" class="sm" style="background:#fff;color:var(--g2);flex:0 0 auto">📲 Install App</button><button id="btnLang" class="sm" style="background:#ffffff33;flex:0 0 auto">🌍 Sesotho</button></div>
+  </div>
+  <div class="heroImg"><img src="work4.jpg" alt="Before and after paving"><span class="badge2">Before → After</span></div>
 </header>
 
 <main class="wrap">
 
   <!-- LOGIN -->
-  <section class="card" id="authCard">
+  <div id="authBack" class="hidden"></div>
+  <section class="card hidden" id="authCard">
+    <button id="authX" class="sm ghost" style="float:right">✕</button>
     <h2>Get a Quote 👋</h2>
     <p class="small">Sign in or create a free account to send us your order.</p>
     <input id="email" type="email" placeholder="Email" autocomplete="email">
@@ -109,6 +192,11 @@ footer{text-align:center;color:var(--mut);font-size:12px;margin-top:20px}
       <button id="btnOrder">Submit Order</button>
     </div>
     <div class="card"><h2>My Orders</h2><div id="myOrders"></div></div>
+    <div class="card" id="reviewForm"><h2>⭐ Write a Review</h2><p class="small">Tell others about your experience. It appears after we approve it.</p>
+      <select id="rStars"><option value="5">⭐⭐⭐⭐⭐ Excellent</option><option value="4">⭐⭐⭐⭐ Good</option><option value="3">⭐⭐⭐ Okay</option><option value="2">⭐⭐ Poor</option><option value="1">⭐ Bad</option></select>
+      <input id="rName" placeholder="Your name (shown publicly)" maxlength="40">
+      <textarea id="rText" maxlength="500" placeholder="Your review (10-500 characters)"></textarea>
+      <button id="btnReview">Submit Review</button></div>
     <button class="ghost" data-act="pwreset">🔑 Change password</button>
     <button class="alt" data-act="logout">Logout</button>
   </section>
@@ -121,6 +209,9 @@ footer{text-align:center;color:var(--mut);font-size:12px;margin-top:20px}
       <button data-tab="orders">📦 Orders</button>
       <button data-tab="projects">🔐 Vault</button>
       <button data-tab="clients">👥 Clients</button>
+      <button data-tab="workers">👷 Workers</button>
+      <button data-tab="reviews">⭐ Reviews</button>
+      <button data-tab="settings">⚙ Site Info</button>
     </div>
 
     <div id="t-dash">
@@ -146,6 +237,25 @@ footer{text-align:center;color:var(--mut);font-size:12px;margin-top:20px}
     </div>
 
     <div id="t-clients" class="hidden"><div id="clientList"></div></div>
+    <div id="t-workers" class="hidden">
+      <div class="box"><b>👷 Monthly Salaries</b>
+        <input id="wMonth" type="month">
+        <div class="stats" id="wTotals" style="margin-top:8px"></div></div>
+      <div class="box"><b>➕ Add Worker</b>
+        <input id="wName" placeholder="Worker name">
+        <input id="wPhone" type="tel" placeholder="Phone">
+        <input id="wRole" placeholder="Role (e.g. Paver, Helper)">
+        <input id="wSalary" type="number" inputmode="decimal" placeholder="Monthly salary (M)">
+        <button id="btnWorker" style="background:var(--gold);color:#111">Save Worker</button></div>
+      <div id="workerList"></div>
+    </div>
+    <div id="t-reviews" class="hidden"><div id="adminReviews"></div></div>
+    <div id="t-settings" class="hidden"><div class="box"><b>⚙ Website info</b><p class="small" style="color:#9fb0a4">Shown to visitors. Leave a box empty to hide it.</p>
+      <label class="small">Business hours</label>
+      <textarea id="sHours" placeholder="Mon-Fri 7:00-17:00&#10;Sat 7:00-13:00"></textarea>
+      <input id="sAddress" placeholder="Address / area">
+      <input id="sMap" placeholder="Google Maps link (https://...)">
+      <button id="btnSettings" style="background:var(--gold);color:#111">Save</button></div></div>
 
     <button class="ghost" data-act="pwreset" style="margin-top:12px">🔑 Change password</button>
     <button class="alt" data-act="logout" style="margin-top:6px">Logout</button>
@@ -153,28 +263,46 @@ footer{text-align:center;color:var(--mut);font-size:12px;margin-top:20px}
 
   <!-- PUBLIC INFO -->
   <section id="pub">
-    <div class="card"><h2>Our Services</h2>
+    <div class="duo"><button id="btnA1" class="big yellow">📝 I want a quote<small>Send your request and site photos</small></button><button id="btnA2" class="big white">🔐 My orders<small>Login to track your requests</small></button></div>
+    <div class="trust"><span>✅ Free quotes</span><span>📸 Photos welcome</span><span>💬 WhatsApp friendly</span></div>
+    <div class="card dark"><h2>How it works</h2><div class="steps">
+      <div><b>1</b><span>Send your request and site photos</span></div>
+      <div><b>2</b><span>We contact you with a quote</span></div>
+      <div><b>3</b><span>We build, you enjoy 🌿</span></div></div></div>
+    <div class="card svc"><h2>Our Services</h2>
       <div class="service"><span class="i">🧱</span><div><b>Paving</b><span class="small">Driveways, patios & walkways</span></div></div>
       <div class="service"><span class="i">🌿</span><div><b>Landscaping</b><span class="small">Design and full yard makeovers</span></div></div>
       <div class="service"><span class="i">🌳</span><div><b>Lawn Installation</b><span class="small">Fresh, lush, even grass</span></div></div>
       <div class="service"><span class="i">🏡</span><div><b>Yard Decoration & Maintenance</b><span class="small">Keep it looking perfect</span></div></div>
     </div>
-    <div class="card"><h2>Quality of Our Work 📸</h2>
+    <div class="card"><h2>⚡ Quick Quote on WhatsApp</h2><p class="small">No account needed. Tell us what you need.</p>
+      <select id="qService"><option>Paving</option><option>Landscaping</option><option>Lawn Installation</option><option>Yard Decoration</option><option>Maintenance</option></select>
+      <input id="qPlace" placeholder="Your village / town">
+      <button id="btnWaQuote" style="background:#25D366">Send on WhatsApp 💬</button></div>
+    <div class="card"><h2>Our Work 📸</h2>
+      <div class="ba"><img data-act="zoom" loading="lazy" src="work4.jpg" alt="Before and after paving"><span>Before and after: rough ground turned into a clean paved yard.</span></div>
       <div class="grid">
-        <img loading="lazy" src="https://i.ibb.co/zVBSL6Zg/photo1.jpg" alt="Work 1">
-        <img loading="lazy" src="https://i.ibb.co/wDm2nYr/photo2.jpg" alt="Work 2">
-        <img loading="lazy" src="https://i.ibb.co/BVTyqjXr/photo3.jpg" alt="Work 3">
-        <img loading="lazy" src="https://i.ibb.co/gbC7PSHz/photo4.jpg" alt="Work 4">
+        <img data-act="zoom" loading="lazy" src="work1.jpg" alt="Hexagon paving in a yard">
+        <img data-act="zoom" loading="lazy" src="work6.jpg" alt="Patterned paving driveway">
+        <img data-act="zoom" loading="lazy" src="work2.jpg" alt="Red and grey hexagon paving">
+        <img data-act="zoom" loading="lazy" src="work3.jpg" alt="Paved driveway at sunset">
+        <img data-act="zoom" loading="lazy" src="work5.jpg" alt="Lawn with paving">
+        <img data-act="zoom" loading="lazy" src="work7.jpg" alt="Grass and stepping-stone feature">
       </div>
-      <p class="small">Real work by SmartScape.</p>
+      <p class="small">Real work by SmartScape. Tap a photo to enlarge.</p>
     </div>
+    <div class="card"><h2>⭐ What Customers Say</h2><div id="reviewList"></div>
+      <button class="ghost" id="btnWriteReview">✍️ Write a review</button></div>
+    <div class="band"><h2>Ready to transform your yard?</h2><p>Send your request and site photos. We'll get back to you with a quote.</p><button id="btnBand">📝 Get a Free Quote</button></div>
     <div class="card"><h2>Contact Us</h2>
-      <p>📞 56044031 / 62044031</p>
+      <div id="bizInfo"></div>
+      <p>📞 <a href="tel:+26656044031">56044031</a> / <a href="tel:+26662044031">62044031</a></p>
       <p>✉️ mpoboleliteboho@gmail.com<br>smartscape01@gmail.com</p>
       <a class="wa" href="https://wa.me/26656044031">Chat on WhatsApp 💬</a>
     </div>
   </section>
 
+  <a class="fab" href="https://wa.me/26656044031" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
   <footer>© SmartScape · Lesotho</footer>
 </main>
 
@@ -185,6 +313,13 @@ footer{text-align:center;color:var(--mut);font-size:12px;margin-top:20px}
   <button id="dSave">Save</button>
   <button class="ghost" id="dCancel">Cancel</button>
 </dialog>
+<dialog id="wdlg">
+  <h3 id="wdTitle" style="margin-top:0"></h3>
+  <select id="wdKind"><option value="Salary">💵 Salary paid</option><option value="Advance">⏩ Advance paid</option><option value="Bonus">🎁 Bonus (adds to due)</option><option value="Deduction">➖ Deduction (reduces due)</option></select>
+  <input id="wdAmount" type="number" inputmode="decimal" placeholder="Amount (M)">
+  <input id="wdNote" placeholder="Note (optional)">
+  <button id="wdSave">Save</button><button class="ghost" id="wdCancel">Cancel</button>
+</dialog>
 <div id="lb" class="hidden"><img alt=""></div>
 <div id="toast"></div>
 
@@ -192,6 +327,7 @@ footer{text-align:center;color:var(--mut);font-size:12px;margin-top:20px}
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script>
+if(typeof firebase==="undefined"){document.body.insertAdjacentHTML("afterbegin",'<p style="padding:16px;margin:0;background:#fee2e2;color:#7f1d1d">The site could not load. Check your internet connection (turn off Data Saver) and refresh.</p>');throw new Error("Firebase not loaded")}
 firebase.initializeApp({
   apiKey:"AIzaSyASD0dN5hudaEmijCn4VwSi3nTDMLyl9GU",
   authDomain:"smart-scape-946d8.firebaseapp.com",
@@ -201,6 +337,7 @@ firebase.initializeApp({
   appId:"1:973245329066:web:7e79cf88027b1aa41c2ad3"
 });
 const auth=firebase.auth(), db=firebase.firestore();
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(()=>auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(()=>{}));
 // UI only. The REAL protection is firestore.rules
 const ADMINS=["mpoboleliteboho@gmail.com","limphomofoka805@gmail.com"];
 const isAdmin=u=>!!u&&ADMINS.includes((u.email||"").toLowerCase());
@@ -213,7 +350,7 @@ const sum=(a,f)=>a.reduce((t,x)=>t+num(f(x)),0);
 const byDate=(a,k)=>a.sort((x,y)=>String(y[k]||"").localeCompare(String(x[k]||"")));
 const waLink=p=>{const d=String(p||"").replace(/\D/g,"");return d?"https://wa.me/"+(d.length===8?"266"+d:d):"#"};
 let tt;function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2800)}
-async function busy(btn,fn){const o=btn.textContent;btn.disabled=true;btn.textContent="Please wait...";try{await fn()}catch(e){toast(e.code==="permission-denied"?"Not allowed: only one order per day, or your account is blocked. Call 56044031.":(e.message||"Something went wrong"))}finally{btn.disabled=false;btn.textContent=o}}
+async function busy(btn,fn){const o=btn.textContent;btn.disabled=true;btn.textContent="Please wait...";try{await fn()}catch(e){toast(e.code==="permission-denied"?"Not allowed (one order per day, one review per account, or blocked). Call 56044031.":(e.message||"Something went wrong"))}finally{btn.disabled=false;btn.textContent=o}}
 
 // Shrink photos so they fit comfortably in the database (~100KB each)
 function compress(file,max=900,q=.65){return new Promise((res,rej)=>{
@@ -247,6 +384,13 @@ document.addEventListener("click",e=>{
   if(act==="inv")invoice(id);
   if(act==="block")blockUser(id);
   if(act==="rcp")receipt(id);
+  if(act==="wrec")openW(id);
+  if(act==="wslip")payslip(id);
+  if(act==="wrate")wRate(id);
+  if(act==="wdel")wDelete(id);
+  if(act==="wrdel")del("salaries",id);
+  if(act==="rvok")toggleReview(id);
+  if(act==="rvdel")del("reviews",id);
   if(act==="pwreset")auth.sendPasswordResetEmail(auth.currentUser.email).then(()=>toast("Reset link sent to "+auth.currentUser.email)).catch(e=>toast(e.message));
   if(act==="toggle")$("d-"+id).classList.toggle("hidden");
 });
@@ -255,11 +399,11 @@ auth.onAuthStateChanged(route);
 
 function route(u){
   const show=(id,on)=>$(id).classList.toggle("hidden",!on);
-  show("authCard",!u);show("verifyCard",false);show("customer",false);show("adminApp",false);show("pub",true);
+  show("authCard",false);show("authBack",false);$("nav").classList.remove("hidden");document.querySelector(".hero").classList.remove("hidden");$("btnNavLogin").classList.toggle("hidden",!!u);show("verifyCard",false);show("customer",false);show("adminApp",false);show("pub",true);
   if(!u)return;
   if(isAdmin(u)){
     if(!u.emailVerified){show("verifyCard",true);return}
-    show("adminApp",true);show("pub",false);loadAdmin();
+    show("adminApp",true);show("pub",false);$("nav").classList.add("hidden");document.querySelector(".hero").classList.add("hidden");loadAdmin();
   }else{
     show("customer",true);show("verifyCard",!u.emailVerified);$("who").textContent="Signed in as "+u.email;loadMyOrders();
   }
@@ -291,19 +435,19 @@ async function loadMyOrders(){
 }
 
 /* ---------- ADMIN ---------- */
-let D={orders:[],clients:[],projects:[],payments:[],expenses:[]};
+let D={orders:[],clients:[],projects:[],payments:[],expenses:[],reviews:[],workers:[],salaries:[]};
 document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>tab(b.dataset.tab));
 function tab(t){
   document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t));
-  ["dash","orders","projects","clients"].forEach(x=>$("t-"+x).classList.toggle("hidden",x!==t));
+  ["dash","orders","projects","clients","workers","reviews","settings"].forEach(x=>$("t-"+x).classList.toggle("hidden",x!==t));
 }
 async function loadAdmin(){
   const get=async c=>(await db.collection(c).get()).docs.map(d=>({id:d.id,...d.data()}));
   try{
-    const [o,c,p,pay,ex]=await Promise.all(["orders","clients","projectArchive","payments","expenses"].map(get));
-    D={orders:byDate(o,"created"),clients:c,projects:byDate(p,"created"),payments:pay,expenses:ex};
+    const [o,c,p,pay,ex,rv,wk,sal]=await Promise.all(["orders","clients","projectArchive","payments","expenses","reviews","workers","salaries"].map(get));
+    D={orders:byDate(o,"created"),clients:c,projects:byDate(p,"created"),payments:pay,expenses:ex,reviews:rv,workers:wk,salaries:sal};
   }catch(e){toast("Cannot load data: "+e.message);return}
-  renderDash();renderOrders();renderProjects();renderClients();
+  renderDash();renderOrders();renderProjects();renderClients();renderReviews();renderSettings();renderWorkers();
 }
 const projFin=p=>{
   const paid=num(p.paid)+sum(D.payments.filter(x=>x.projectId===p.id),x=>x.amount);
@@ -456,15 +600,11 @@ function receipt(id){
   <p>Thank you! 🌿</p>`);
   w.document.close();setTimeout(()=>w.print(),400);
 }
-/* PWA install */
-let ip;const standalone=matchMedia("(display-mode: standalone)").matches;
-addEventListener("beforeinstallprompt",e=>{e.preventDefault();ip=e;$("btnInstall").classList.remove("hidden")});
-if(/iphone|ipad/i.test(navigator.userAgent)&&!standalone)$("btnInstall").classList.remove("hidden");
-$("btnInstall").onclick=async()=>{if(ip){ip.prompt();await ip.userChoice;ip=null;$("btnInstall").classList.add("hidden")}else toast("Tap Share, then 'Add to Home Screen'")};
-addEventListener("appinstalled",()=>$("btnInstall").classList.add("hidden"));
-if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+/* remove any old service worker/cache left by earlier versions */
+if("serviceWorker" in navigator)navigator.serviceWorker.getRegistrations().then(r=>r.forEach(x=>x.unregister())).catch(()=>{});
+if(window.caches)caches.keys().then(k=>k.forEach(n=>caches.delete(n))).catch(()=>{});
 /* Language: English / Sesotho */
-const ST={"We build the outdoors you dream about":"Re haha kantle eo u e lorang","Get a Quote 👋":"Kopa Theko 👋","Sign In":"Kena","Create Account":"Theha Akhaonte","Forgot password?":"U lebetse phasewete?","Place a New Order 📝":"Fana ka Odara e Ncha 📝","Submit Order":"Romella Odara","My Orders":"Liodara Tsa Ka","Logout":"Tsoa","Our Services":"Litšebeletso Tsa Rona","Contact Us":"Ikopanye le Rona","Quality of Our Work 📸":"Boleng ba Mosebetsi oa Rona 📸","Email":"Imeile","Password (min 6 characters)":"Phasewete (bonyane litlhaku tse 6)","Your name":"Lebitso la hau","Where are you? Village / Town":"U kae? Motse / Toropo","Phone e.g. 56044031":"Mohala, mohlala 56044031","What do you need? e.g. Paving a 5m x 4m driveway...":"U hloka eng? Mohlala: Paving ea 5m x 4m...","Verify your email":"Netefatsa imeile ea hau","🔑 Change password":"🔑 Fetola phasewete"};
+const ST={"We build the outdoors you dream about":"Re haha kantle eo u e lorang","Get a Quote 👋":"Kopa Theko 👋","Sign In":"Kena","Create Account":"Theha Akhaonte","Forgot password?":"U lebetse phasewete?","Place a New Order 📝":"Fana ka Odara e Ncha 📝","Submit Order":"Romella Odara","My Orders":"Liodara Tsa Ka","Logout":"Tsoa","Our Services":"Litšebeletso Tsa Rona","Contact Us":"Ikopanye le Rona","Quality of Our Work 📸":"Boleng ba Mosebetsi oa Rona 📸","Email":"Imeile","Password (min 6 characters)":"Phasewete (bonyane litlhaku tse 6)","Your name":"Lebitso la hau","Where are you? Village / Town":"U kae? Motse / Toropo","Phone e.g. 56044031":"Mohala, mohlala 56044031","What do you need? e.g. Paving a 5m x 4m driveway...":"U hloka eng? Mohlala: Paving ea 5m x 4m...","Verify your email":"Netefatsa imeile ea hau","🔑 Change password":"🔑 Fetola phasewete","📝 Get a Free Quote":"📝 Kopa Theko Mahala","How it works":"Ho sebetsa joang"};
 let LANG="en";try{LANG=localStorage.getItem("lang")||"en"}catch(e){}
 const ORIG=new WeakMap();
 function applyLang(){
@@ -478,6 +618,141 @@ function applyLang(){
 }
 $("btnLang").onclick=()=>{LANG=LANG==="st"?"en":"st";try{localStorage.setItem("lang",LANG)}catch(e){}applyLang()};
 applyLang();
+function openAuth(){
+  if(auth.currentUser){$("customer").scrollIntoView({behavior:"smooth"});return}
+  $("authCard").classList.remove("hidden");$("authBack").classList.remove("hidden");$("email").focus();
+}
+const closeAuth=()=>{$("authCard").classList.add("hidden");$("authBack").classList.add("hidden")};
+$("btnCta").onclick=openAuth;$("btnBand").onclick=openAuth;$("btnA1").onclick=openAuth;$("btnA2").onclick=openAuth;$("btnNavLogin").onclick=openAuth;$("authX").onclick=closeAuth;$("authBack").onclick=closeAuth;
+$("btnWaQuote").onclick=()=>{
+  const t="Hello SmartScape, I need "+$("qService").value+($("qPlace").value.trim()?" in "+$("qPlace").value.trim():"")+". Please send me a quote.";
+  window.open("https://wa.me/26656044031?text="+encodeURIComponent(t),"_blank");
+};
+if("IntersectionObserver" in window){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.1});
+  document.querySelectorAll("#pub .card").forEach(c=>{c.classList.add("rv");io.observe(c)});
+}
+const lines=t=>String(t||"").split("\n").map(x=>x.trim()).filter(Boolean);
+async function loadPublic(){
+  try{
+    const st=await db.collection("settings").doc("site").get(),S=st.exists?st.data():{};
+        let h="";const hr=lines(S.hours);
+    if(hr.length)h+=`<p>🕒 ${hr.map(esc).join("<br>")}</p>`;
+    if(S.address)h+=`<p>📍 ${esc(S.address)}</p>`;
+    if(/^https:\/\//.test(S.map||""))h+=`<a class="wa" style="background:#4285f4" href="${esc(S.map)}" target="_blank" rel="noopener">🗺 Open in Google Maps</a>`;
+    $("bizInfo").innerHTML=h;
+  }catch(e){}
+  try{
+    const rs=await db.collection("reviews").where("approved","==",true).get();
+    const a=byDate(rs.docs.map(d=>d.data()),"created").slice(0,10);
+    $("reviewList").innerHTML=a.map(r=>`<div class="order"><b>${esc(r.name)}</b> <span class="stars">${"⭐".repeat(Math.max(1,Math.min(5,r.rating|0)))}</span><br>${esc(r.text)}</div>`).join("")||'<p class="small">No reviews yet. Be the first to share your experience!</p>';
+  }catch(e){$("reviewList").innerHTML=""}
+}
+loadPublic();
+$("btnWriteReview").onclick=()=>{if(auth.currentUser)$("reviewForm").scrollIntoView({behavior:"smooth"});else openAuth()};
+$("btnReview").onclick=e=>busy(e.target,async()=>{
+  const u=auth.currentUser;if(!u)throw new Error("Please sign in first");
+  if(!u.emailVerified)throw new Error("Please verify your email first");
+  const text=$("rText").value.trim();if(text.length<10)throw new Error("Please write at least 10 characters");
+  await db.collection("reviews").doc(u.uid).set({name:$("rName").value.trim()||"Customer",rating:Number($("rStars").value),text,approved:false,created:new Date().toISOString()});
+  $("rText").value="";toast("Thank you! Your review will show after approval ⭐");
+});
+function renderReviews(){
+  $("adminReviews").innerHTML=byDate(D.reviews,"created").map(r=>`<div class="proj"><b>${esc(r.name)}</b> <span class="stars">${"⭐".repeat(Math.max(1,Math.min(5,r.rating|0)))}</span> <span class="badge ${r.approved?"Done":"New"}">${r.approved?"Visible":"Pending"}</span><p>${esc(r.text)}</p>
+   <div class="row"><button class="sm" data-act="rvok" data-id="${esc(r.id)}">${r.approved?"Hide":"Approve"}</button><button class="sm danger" data-act="rvdel" data-id="${esc(r.id)}">Delete</button></div></div>`).join("")||'<p class="small">No reviews yet.</p>';
+}
+async function toggleReview(id){
+  const r=D.reviews.find(x=>x.id===id);if(!r)return;
+  await db.collection("reviews").doc(id).update({approved:!r.approved});toast(r.approved?"Hidden":"Approved ✅");loadAdmin();
+}
+async function renderSettings(){
+  try{const d=await db.collection("settings").doc("site").get(),S=d.exists?d.data():{};
+    $("sHours").value=S.hours||"";$("sAddress").value=S.address||"";$("sMap").value=S.map||"";}catch(e){}
+}
+$("btnSettings").onclick=e=>busy(e.target,async()=>{
+  const map=$("sMap").value.trim();if(map&&!/^https:\/\//.test(map))throw new Error("The map link must start with https://");
+  await db.collection("settings").doc("site").set({hours:$("sHours").value.trim(),address:$("sAddress").value.trim(),map});
+  toast("Website info saved ✅");loadPublic();
+});
+$("btnWaQuote").onclick=()=>{
+  const t="Hello SmartScape, I need "+$("qService").value+($("qPlace").value.trim()?" in "+$("qPlace").value.trim():"")+". Please send me a quote.";
+  window.open("https://wa.me/26656044031?text="+encodeURIComponent(t),"_blank");
+};
+/* ---- Workers & monthly salaries ---- */
+$("wMonth").value=new Date().toISOString().slice(0,7);$("wMonth").onchange=()=>renderWorkers();
+const wFin=(w,m)=>{
+  const r=D.salaries.filter(x=>x.workerId===w.id&&x.month===m).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  const k=t=>sum(r.filter(x=>x.kind===t),x=>x.amount);
+  const due=num(w.salary)+k("Bonus")-k("Deduction"),paid=k("Salary")+k("Advance");
+  return{r,bonus:k("Bonus"),ded:k("Deduction"),due,paid,bal:due-paid};
+};
+const mName=m=>{const[y,mo]=m.split("-");return new Date(y,mo-1,1).toLocaleString("en",{month:"long",year:"numeric"})};
+function renderWorkers(){
+  const m=$("wMonth").value||new Date().toISOString().slice(0,7);
+  const ws=[...D.workers].sort((a,b)=>(a.name||"").localeCompare(b.name||""));
+  const f=ws.map(w=>wFin(w,m));
+  $("wTotals").innerHTML=`<div class="stat"><small>👷 Workers</small><b>${ws.length}</b></div><div class="stat"><small>📋 Due</small><b>${M(sum(f,x=>x.due))}</b></div><div class="stat"><small>✅ Paid</small><b class="inc">${M(sum(f,x=>x.paid))}</b></div><div class="stat"><small>⏳ Still to pay</small><b class="owe">${M(sum(f,x=>x.bal))}</b></div>`;
+  $("workerList").innerHTML=ws.map((w,i)=>{const x=f[i];return`<div class="proj">
+    <b>${esc(w.name)}</b> <span class="small" style="color:#9fb0a4">${esc(w.role)} · ${esc(w.phone)}</span>
+    <div class="line"><span>Monthly salary</span><b>${M(w.salary)}</b></div>
+    ${x.bonus?`<div class="line"><span>Bonus</span><b>${M(x.bonus)}</b></div>`:""}${x.ded?`<div class="line"><span>Deductions</span><b>-${M(x.ded)}</b></div>`:""}
+    <div class="line"><span>Paid (${esc(mName(m))})</span><b class="inc">${M(x.paid)}</b></div>
+    <div class="line"><span>Balance</span><b class="${x.bal>0?"owe":"inc"}">${x.bal>0?M(x.bal):x.bal<0?"Overpaid "+M(-x.bal):"Paid ✅"}</b></div>
+    ${x.r.map(r=>`<div class="line"><span class="small">${new Date(r.date).toLocaleDateString()} · ${esc(r.kind)} ${esc(r.note)}</span><span>${M(r.amount)} <a href="#" data-act="wrdel" data-id="${esc(r.id)}" style="color:#ff6b6b;text-decoration:none" onclick="return false">✕</a></span></div>`).join("")}
+    <div class="row" style="margin-top:8px">
+      <button class="sm" data-act="wrec" data-id="${esc(w.id)}">+ Record</button>
+      <button class="sm" style="background:#7c3aed" data-act="wslip" data-id="${esc(w.id)}">🧾 Payslip</button>
+      <button class="sm alt" data-act="wrate" data-id="${esc(w.id)}">✏ Salary</button>
+      <button class="sm danger" data-act="wdel" data-id="${esc(w.id)}">Remove</button></div></div>`}).join("")||'<p class="small">No workers yet. Add your first worker above.</p>';
+}
+$("btnWorker").onclick=e=>busy(e.target,async()=>{
+  const name=$("wName").value.trim();if(!name)throw new Error("Worker name is required");
+  await db.collection("workers").add({name,phone:$("wPhone").value.trim(),role:$("wRole").value.trim(),salary:num($("wSalary").value),created:new Date().toISOString()});
+  ["wName","wPhone","wRole","wSalary"].forEach(i=>$(i).value="");toast("Worker added 👷");loadAdmin();
+});
+let wId;
+function openW(id){wId=id;const w=D.workers.find(x=>x.id===id);$("wdTitle").textContent=(w?w.name:"")+" · "+mName($("wMonth").value);$("wdAmount").value="";$("wdNote").value="";$("wdlg").showModal()}
+$("wdCancel").onclick=()=>$("wdlg").close();
+$("wdSave").onclick=e=>busy(e.target,async()=>{
+  const amount=num($("wdAmount").value);if(amount<=0)throw new Error("Enter an amount");
+  await db.collection("salaries").add({workerId:wId,month:$("wMonth").value,kind:$("wdKind").value,amount,note:$("wdNote").value.trim(),date:new Date().toISOString()});
+  $("wdlg").close();toast("Saved ✅");loadAdmin();
+});
+async function wRate(id){
+  const w=D.workers.find(x=>x.id===id);if(!w)return;
+  const v=prompt("New monthly salary (M) for "+w.name,w.salary);if(v===null)return;
+  await db.collection("workers").doc(id).update({salary:num(v)});toast("Salary updated");loadAdmin();
+}
+async function wDelete(id){
+  if(!confirm("Remove this worker and all their salary records?"))return;
+  const b=db.batch();D.salaries.filter(x=>x.workerId===id).forEach(x=>b.delete(db.collection("salaries").doc(x.id)));
+  b.delete(db.collection("workers").doc(id));await b.commit();toast("Worker removed");loadAdmin();
+}
+function payslip(id){
+  const w=D.workers.find(x=>x.id===id);if(!w)return;
+  const m=$("wMonth").value,x=wFin(w,m),win=window.open("","_blank");if(!win){toast("Allow pop-ups to print payslips");return}
+  win.document.write(`<!DOCTYPE html><meta charset="utf-8"><title>Payslip</title>
+  <style>body{font-family:Arial;max-width:520px;margin:30px auto;color:#222}h1{color:#1e7a34;margin:0}table{width:100%;border-collapse:collapse;margin-top:12px}td{padding:8px;border-bottom:1px solid #ddd}td:last-child{text-align:right}.t{font-weight:700}</style>
+  <h1>SmartScape 🌿</h1><h3>PAYSLIP · ${esc(mName(m))}</h3>
+  <p><b>${esc(w.name)}</b><br>${esc(w.role)} ${esc(w.phone)}</p>
+  <table><tr><td>Monthly salary</td><td>${M(w.salary)}</td></tr>
+  ${x.bonus?`<tr><td>Bonus</td><td>${M(x.bonus)}</td></tr>`:""}${x.ded?`<tr><td>Deductions</td><td>-${M(x.ded)}</td></tr>`:""}
+  <tr class="t"><td>Total due</td><td>${M(x.due)}</td></tr></table>
+  <table>${x.r.filter(r=>r.kind==="Salary"||r.kind==="Advance").map(r=>`<tr><td>${new Date(r.date).toLocaleDateString()} ${esc(r.kind)} ${esc(r.note)}</td><td>${M(r.amount)}</td></tr>`).join("")}
+  <tr class="t"><td>Total paid</td><td>${M(x.paid)}</td></tr><tr class="t"><td>Balance</td><td>${M(x.bal)}</td></tr></table>
+  <p style="margin-top:40px">Signature: ____________________</p>`);
+  win.document.close();setTimeout(()=>win.print(),400);
+}
+/* Install app button */
+let ip;
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();ip=e});
+addEventListener("appinstalled",()=>$("btnInstall").classList.add("hidden"));
+if(matchMedia("(display-mode: standalone)").matches)$("btnInstall").classList.add("hidden");
+$("btnInstall").onclick=async()=>{
+  if(ip){ip.prompt();await ip.userChoice;ip=null}
+  else toast(/iphone|ipad/i.test(navigator.userAgent)?"Tap Share, then Add to Home Screen":"Tap the ⋮ menu, then Install app / Add to Home screen");
+};
+$("pass").onkeydown=e=>{if(e.key==="Enter")$("btnLogin").click()};
 async function del(col,id){if(confirm("Delete this record?")){await db.collection(col).doc(id).delete();loadAdmin()}}
 async function delProject(id){
   if(!confirm("Delete this project and all its payments & expenses?"))return;
