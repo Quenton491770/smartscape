@@ -75,8 +75,6 @@ footer{text-align:center;color:var(--mut);font-size:12px;margin-top:20px}
 html{scroll-behavior:smooth}
 .grid img{cursor:zoom-in;transition:transform .25s}.grid img:active{transform:scale(.97)}
 .grid img:first-child{grid-column:span 2;height:190px}
-.trust{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:16px 0 4px}
-.trust span{background:#fff;padding:8px 12px;border-radius:99px;font-size:13px;font-weight:600;box-shadow:0 1px 6px #0001}
 .rv{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}.rv.in{opacity:1;transform:none}
 #contactCard a:not(.wa){color:var(--g);font-weight:700}
 .ba img{width:100%;border-radius:12px;cursor:zoom-in}.ba span{display:block;margin:8px 0 12px;font-size:13px;color:var(--mut)}
@@ -119,33 +117,35 @@ body{font-family:Poppins,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-se
 .hero p{font-size:17px;opacity:.92;margin:0 0 18px}
 .ctaRow{display:flex;gap:10px;flex-wrap:wrap}
 .cta{width:auto;padding:14px 22px;border-radius:99px;background:#fff;color:var(--g2);font-weight:800;font-size:16px;margin:0;display:inline-block}
-a.ghostA{text-decoration:none;background:#ffffff22;color:#fff;font-weight:700}
 .heroImg{position:relative;margin-top:26px}
 .heroImg img{width:100%;max-width:none;border-radius:24px;box-shadow:0 14px 40px #0006;border:4px solid #ffffff33;display:block}
 .badge2{position:absolute;left:14px;bottom:14px;background:#fff;color:var(--g2);font-weight:800;font-size:12px;padding:6px 12px;border-radius:99px}
 @media(min-width:720px){.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center;padding:48px 8vw}.heroImg{margin-top:0}}
 .card{border-radius:20px}
 .service span.i{background:#e9f4e6;border-radius:14px;width:48px;height:48px;display:grid;place-items:center;flex:none}
-.band{background:linear-gradient(135deg,var(--g2),var(--g));color:#fff;border-radius:22px;padding:26px 18px;margin:14px 0;text-align:center}
 .band h2{margin:0 0 6px;font-size:24px;letter-spacing:-.01em}.band p{margin:0}
-.band button{background:#fff;color:var(--g2);max-width:300px;margin:14px auto 0;display:block;border-radius:99px}
 .cta{background:#fff;color:var(--g2)}
-.band{background:linear-gradient(160deg,#14572a,#1e7a34);color:#fff}
-.band button{background:#fff;color:var(--g2)}
 .badge2{background:#fff;color:var(--g2)}
+[data-v]:not(.on){display:none!important}
+#tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.tile{width:auto;margin:0;text-align:left;background:#fff;color:var(--ink);border-radius:22px;padding:16px;box-shadow:0 2px 12px #0000000f;display:flex;flex-direction:column;gap:4px;font-weight:400}
+.tile i{font-style:normal;font-size:26px;background:#e9f4e6;width:48px;height:48px;border-radius:16px;display:grid;place-items:center;margin-bottom:6px}
+.tile b{font-size:15px}.tile span{font-size:12px;color:var(--mut)}
+.tile.wide{grid-column:span 2;background:linear-gradient(135deg,var(--g2),var(--g));color:#fff}
+.tile.wide i{background:#ffffff26}.tile.wide span{color:#ffffffcc}
+@media(min-width:720px){#tiles{grid-template-columns:repeat(3,1fr)}.tile.wide{grid-column:span 3}}
 </style>
 </head>
 <body>
-<nav id="nav"><b>SmartScape 🌿</b><button id="btnNavLogin" class="sm">Login</button></nav>
+<nav id="nav"><div style="display:flex;gap:8px;align-items:center"><button id="btnBack" class="sm ghost hidden">←</button><b>SmartScape 🌿</b></div><button id="btnNavLogin" class="sm">Login</button></nav>
 
-<header class="hero">
+<header class="hero" data-v="home">
   <div class="heroTxt">
     <span class="pill">🌿 Paving • Landscaping • Lawns</span>
     <h1>Your yard, <span class="hl">done right.</span></h1>
     <p>We build the outdoors you dream about</p>
     <div class="ctaRow">
       <button id="btnCta" class="cta">📝 Get a Free Quote</button>
-      <a class="cta ghostA" href="https://wa.me/26656044031" target="_blank" rel="noopener">💬 WhatsApp</a>
     </div>
     <div class="row" style="justify-content:flex-start;margin-top:12px"><button id="btnInstall" class="sm" style="background:#fff;color:var(--g2);flex:0 0 auto">📲 Install App</button><button id="btnLang" class="sm" style="background:#ffffff33;flex:0 0 auto">🌍 Sesotho</button></div>
   </div>
@@ -177,7 +177,7 @@ a.ghostA{text-decoration:none;background:#ffffff22;color:#fff;font-weight:700}
   </section>
 
   <!-- CUSTOMER -->
-  <section id="customer" class="hidden">
+  <section id="customer" class="hidden" data-v="account">
     <div class="card">
       <h2>Place a New Order 📝</h2>
       <p class="small" id="who"></p>
@@ -263,23 +263,30 @@ a.ghostA{text-decoration:none;background:#ffffff22;color:#fff;font-weight:700}
 
   <!-- PUBLIC INFO -->
   <section id="pub">
+    <div id="tiles" data-v="home">
+      <button class="tile" data-go="services"><i>🧱</i><b>Services</b><span>What we do</span></button>
+      <button class="tile" data-go="work"><i>📸</i><b>Our Work</b><span>Photos and results</span></button>
+      <button class="tile" data-go="quote"><i>⚡</i><b>WhatsApp Quote</b><span>No account needed</span></button>
+      <button class="tile" data-go="reviews"><i>⭐</i><b>Reviews</b><span>What clients say</span></button>
+      <button class="tile" data-go="how"><i>🛠</i><b>How it works</b><span>3 simple steps</span></button>
+      <button class="tile" data-go="contact"><i>📞</i><b>Contact</b><span>Call or WhatsApp</span></button>
+    </div>
     <div class="duo"><button id="btnA1" class="big yellow">📝 I want a quote<small>Send your request and site photos</small></button><button id="btnA2" class="big white">🔐 My orders<small>Login to track your requests</small></button></div>
-    <div class="trust"><span>✅ Free quotes</span><span>📸 Photos welcome</span><span>💬 WhatsApp friendly</span></div>
-    <div class="card dark"><h2>How it works</h2><div class="steps">
+    <div class="card dark" data-v="how"><h2>How it works</h2><div class="steps">
       <div><b>1</b><span>Send your request and site photos</span></div>
       <div><b>2</b><span>We contact you with a quote</span></div>
       <div><b>3</b><span>We build, you enjoy 🌿</span></div></div></div>
-    <div class="card svc"><h2>Our Services</h2>
+    <div class="card svc" data-v="services"><h2>Our Services</h2>
       <div class="service"><span class="i">🧱</span><div><b>Paving</b><span class="small">Driveways, patios & walkways</span></div></div>
       <div class="service"><span class="i">🌿</span><div><b>Landscaping</b><span class="small">Design and full yard makeovers</span></div></div>
       <div class="service"><span class="i">🌳</span><div><b>Lawn Installation</b><span class="small">Fresh, lush, even grass</span></div></div>
       <div class="service"><span class="i">🏡</span><div><b>Yard Decoration & Maintenance</b><span class="small">Keep it looking perfect</span></div></div>
     </div>
-    <div class="card"><h2>⚡ Quick Quote on WhatsApp</h2><p class="small">No account needed. Tell us what you need.</p>
+    <div class="card" data-v="quote"><h2>⚡ Quick Quote on WhatsApp</h2><p class="small">No account needed. Tell us what you need.</p>
       <select id="qService"><option>Paving</option><option>Landscaping</option><option>Lawn Installation</option><option>Yard Decoration</option><option>Maintenance</option></select>
       <input id="qPlace" placeholder="Your village / town">
       <button id="btnWaQuote" style="background:#25D366">Send on WhatsApp 💬</button></div>
-    <div class="card"><h2>Our Work 📸</h2>
+    <div class="card" data-v="work"><h2>Our Work 📸</h2>
       <div class="ba"><img data-act="zoom" loading="lazy" src="work4.jpg" alt="Before and after paving"><span>Before and after: rough ground turned into a clean paved yard.</span></div>
       <div class="grid">
         <img data-act="zoom" loading="lazy" src="work1.jpg" alt="Hexagon paving in a yard">
@@ -291,10 +298,9 @@ a.ghostA{text-decoration:none;background:#ffffff22;color:#fff;font-weight:700}
       </div>
       <p class="small">Real work by SmartScape. Tap a photo to enlarge.</p>
     </div>
-    <div class="card"><h2>⭐ What Customers Say</h2><div id="reviewList"></div>
+    <div class="card" data-v="reviews"><h2>⭐ What Customers Say</h2><div id="reviewList"></div>
       <button class="ghost" id="btnWriteReview">✍️ Write a review</button></div>
-    <div class="band"><h2>Ready to transform your yard?</h2><p>Send your request and site photos. We'll get back to you with a quote.</p><button id="btnBand">📝 Get a Free Quote</button></div>
-    <div class="card"><h2>Contact Us</h2>
+    <div class="card" data-v="contact"><h2>Contact Us</h2>
       <div id="bizInfo"></div>
       <p>📞 <a href="tel:+26656044031">56044031</a> / <a href="tel:+26662044031">62044031</a></p>
       <p>✉️ mpoboleliteboho@gmail.com<br>smartscape01@gmail.com</p>
@@ -405,7 +411,7 @@ function route(u){
     if(!u.emailVerified){show("verifyCard",true);return}
     show("adminApp",true);show("pub",false);$("nav").classList.add("hidden");document.querySelector(".hero").classList.add("hidden");loadAdmin();
   }else{
-    show("customer",true);show("verifyCard",!u.emailVerified);$("who").textContent="Signed in as "+u.email;loadMyOrders();
+    show("customer",true);show("verifyCard",!u.emailVerified);if(wantAccount){wantAccount=false;setView("account")}$("who").textContent="Signed in as "+u.email;loadMyOrders();
   }
 }
 
@@ -619,19 +625,16 @@ function applyLang(){
 $("btnLang").onclick=()=>{LANG=LANG==="st"?"en":"st";try{localStorage.setItem("lang",LANG)}catch(e){}applyLang()};
 applyLang();
 function openAuth(){
-  if(auth.currentUser){$("customer").scrollIntoView({behavior:"smooth"});return}
+  if(auth.currentUser){setView("account");return}
+  wantAccount=true;
   $("authCard").classList.remove("hidden");$("authBack").classList.remove("hidden");$("email").focus();
 }
 const closeAuth=()=>{$("authCard").classList.add("hidden");$("authBack").classList.add("hidden")};
-$("btnCta").onclick=openAuth;$("btnBand").onclick=openAuth;$("btnA1").onclick=openAuth;$("btnA2").onclick=openAuth;$("btnNavLogin").onclick=openAuth;$("authX").onclick=closeAuth;$("authBack").onclick=closeAuth;
+$("btnCta").onclick=openAuth;$("btnA1").onclick=openAuth;$("btnA2").onclick=openAuth;$("btnNavLogin").onclick=openAuth;$("authX").onclick=closeAuth;$("authBack").onclick=closeAuth;
 $("btnWaQuote").onclick=()=>{
   const t="Hello SmartScape, I need "+$("qService").value+($("qPlace").value.trim()?" in "+$("qPlace").value.trim():"")+". Please send me a quote.";
   window.open("https://wa.me/26656044031?text="+encodeURIComponent(t),"_blank");
 };
-if("IntersectionObserver" in window){
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.1});
-  document.querySelectorAll("#pub .card").forEach(c=>{c.classList.add("rv");io.observe(c)});
-}
 const lines=t=>String(t||"").split("\n").map(x=>x.trim()).filter(Boolean);
 async function loadPublic(){
   try{
@@ -649,7 +652,7 @@ async function loadPublic(){
   }catch(e){$("reviewList").innerHTML=""}
 }
 loadPublic();
-$("btnWriteReview").onclick=()=>{if(auth.currentUser)$("reviewForm").scrollIntoView({behavior:"smooth"});else openAuth()};
+$("btnWriteReview").onclick=()=>{if(auth.currentUser){setView("account");setTimeout(()=>$("reviewForm").scrollIntoView({behavior:"smooth"}),80)}else openAuth()};
 $("btnReview").onclick=e=>busy(e.target,async()=>{
   const u=auth.currentUser;if(!u)throw new Error("Please sign in first");
   if(!u.emailVerified)throw new Error("Please verify your email first");
@@ -743,6 +746,19 @@ function payslip(id){
   <p style="margin-top:40px">Signature: ____________________</p>`);
   win.document.close();setTimeout(()=>win.print(),400);
 }
+/* App-style views (tiles) */
+let wantAccount=false;
+const VIEWS=["home","services","work","quote","reviews","how","contact","account"];
+function applyView(){
+  let v=location.hash.slice(1);if(!VIEWS.includes(v)||(v==="account"&&!auth.currentUser))v="home";
+  document.querySelectorAll("[data-v]").forEach(e=>e.classList.toggle("on",e.dataset.v===v));
+  $("btnBack").classList.toggle("hidden",v==="home");window.scrollTo(0,0);
+}
+function setView(v){const h=v==="home"?"":v;if(location.hash.slice(1)!==h)location.hash=h;applyView()}
+addEventListener("hashchange",applyView);
+document.addEventListener("click",e=>{const t=e.target.closest("[data-go]");if(t){t.dataset.go==="auth"?openAuth():setView(t.dataset.go)}});
+$("btnBack").onclick=()=>setView("home");
+applyView();
 /* Install app button */
 let ip;
 addEventListener("beforeinstallprompt",e=>{e.preventDefault();ip=e});
